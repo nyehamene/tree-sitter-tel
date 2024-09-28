@@ -1,0 +1,48 @@
+===
+namespace
+===
+
+namespace demo;
+
+---
+
+(source
+    (namespace
+        name: (ident)))
+
+===
+record - empty
+===
+
+namespace demo;
+def Model record end
+
+---
+
+(source
+    (namespace
+        name: (ident))
+    (def_record
+        name: (ident)))
+
+===
+record
+===
+
+namespace demo;
+
+def Model record
+    name String;
+    end
+
+---
+
+(source
+    (namespace
+        name: (ident))
+    (def_record
+        name: (ident)
+        (components
+            (component
+                name: (ident)
+                type: (ident)))))

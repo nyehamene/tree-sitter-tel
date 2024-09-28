@@ -1,0 +1,71 @@
+/// <reference types="tree-sitter-cli/dsl" />
+// @ts-check
+
+module.exports = grammar({
+  name: "tel",
+
+  extras: ($) => [$.comment, /\s/],
+
+  rules: {
+    source: ($) => optional(seq($.namespace, repeat($._toplevel_stmt))),
+
+    namespace: ($) =>
+      seq(
+        KEYWORD().namespace,
+        field(FIELD().name, alias($.ns_ident, $.ident)),
+        PUNC().semi_colon,
+      ),
+
+    _toplevel_stmt: ($) => choice($.def_record),
+
+    def_record: ($) =>
+      seq(
+        KEYWORD().def,
+        field(FIELD().name, alias($.type_ident, $.ident)),
+        KEYWORD().record,
+        optional(alias($.record_components, $.components)),
+        KEYWORD().end,
+      ),
+
+    record_components: ($) => repeat1(alias($.record_component, $.component)),
+
+    record_component: ($) =>
+      seq(
+        field(FIELD().name, alias($.var_ident, $.ident)),
+        field(FIELD().type, alias($.type_ident, $.ident)),
+        PUNC().semi_colon,
+      ),
+
+    type_ident: () => token(/[A-Z][a-zA-Z]*/),
+
+    var_ident: ($) => token(/[a-z][a-z_]*/),
+
+    ns_ident: ($) => alias($.var_ident, ""),
+
+    comment: () => token(seq(PUNC().d_hash, /[^\n]*/, "\n")),
+  },
+});
+
+function FIELD() {
+  return {
+    name: "name",
+    type: "type",
+  };
+}
+
+function KEYWORD() {
+  return {
+    namespace: "namespace",
+    record: "record",
+    end: "end",
+    def: "def",
+  };
+}
+
+function PUNC() {
+  return {
+    hash: "#",
+    d_hash: "##",
+    semi_colon: ";",
+  };
+}
