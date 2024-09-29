@@ -66,12 +66,12 @@ def Model record
 template: 0
 ===
 
-template m Model do end
+templ m Model do end
 
 ---
 
 (source
-    (def_template
+    (def_templ
         var: (ident)
         type: (ident)))
 

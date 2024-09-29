@@ -1,0 +1,63 @@
+===
+element: 0
+===
+
+templ m Model do
+    [div]
+    end
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (element tag: (ident))))
+
+===
+element: 1
+===
+
+templ m Model do
+    [div k1=value]
+    end
+
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (element
+            tag: (ident)
+            (attrs
+                (attr
+                    key: (ident)
+                    val: (text))))))
+
+===
+element: 2
+===
+
+templ m Model do
+    [div
+        k1=value
+        k2=value
+        ]
+    end
+
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (element
+            tag: (ident)
+            (attrs
+                (attr
+                    key: (ident)
+                    val: (text))
+                (attr
+                    key: (ident)
+                    val: (text))))))
+

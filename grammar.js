@@ -4,13 +4,18 @@
 const PASCAL_CASE = /[A-Z][A-Za-z0-9]*/;
 const CAMEL_CASE = /[a-z_][A-Za-z0-9]*/;
 const SNAKE_CASE = /[a-z_][a-z_]*/;
+const KEBAB_CASE = /[a-z][a-z-]*/;
+const NOT_SPACE = /[^\s]*/;
 
 function FIELD() {
   return {
     name: "name",
     type: "type",
     target: "target",
+    tag: "tag",
     var: "var",
+    key: "key",
+    value: "val",
   };
 }
 
@@ -21,15 +26,18 @@ function KEYWORD() {
     end: "end",
     def: "def",
     do: "do",
-    template: "template",
+    templ: "templ",
   };
 }
 
 function PUNC() {
   return {
     hash: "#",
-    d_hash: "##",
-    semi_colon: ";",
+    hashDouble: "##",
+    semiColon: ";",
+    bracketLeft: "[",
+    bracketRight: "]",
+    eq: "=",
   };
 }
 
@@ -44,11 +52,12 @@ module.exports = grammar({
     source: ($) =>
       optional(seq(optional($.namespace), repeat($._toplevel_stmt))),
 
-    ident: ($) => token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE)),
+    ident: ($) =>
+      token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE)),
 
-    comment: () => token(repeat1(seq(PUNC().d_hash, /[^\n]*/, "\n"))),
+    comment: () => token(repeat1(seq(PUNC().hashDouble, /[^\n]*/, "\n"))),
 
-    _toplevel_stmt: ($) => choice($.def_record, $.def_template),
+    _toplevel_stmt: ($) => choice($.def_record, $.def_templ),
 
     record_components: ($) => repeat1(alias($.record_component, $.component)),
 
@@ -57,14 +66,14 @@ module.exports = grammar({
         optional($.documentation),
         KEYWORD().namespace,
         field(FIELD().name, alias($.ident, $.ident)),
-        PUNC().semi_colon,
+        PUNC().semiColon,
       ),
 
     record_component: ($) =>
       seq(
         field(FIELD().name, alias($.ident, $.ident)),
         field(FIELD().type, alias($.ident, $.ident)),
-        PUNC().semi_colon,
+        PUNC().semiColon,
       ),
 
     def_record: ($) =>
@@ -77,14 +86,32 @@ module.exports = grammar({
         KEYWORD().end,
       ),
 
-    def_template: ($) =>
+    def_templ: ($) =>
       seq(
         optional($.documentation),
-        KEYWORD().template,
+        KEYWORD().templ,
         field(FIELD().var, alias($.ident, $.ident)),
         field(FIELD().type, alias($.ident, $.ident)),
         KEYWORD().do,
+        optional($.element),
         KEYWORD().end,
+      ),
+
+    element: ($) =>
+      seq(
+        PUNC().bracketLeft,
+        field(FIELD().tag, $.ident),
+        optional($.attrs),
+        PUNC().bracketRight,
+      ),
+
+    attrs: ($) => repeat1($.attr),
+
+    attr: ($) =>
+      seq(
+        field(FIELD().key, $.ident),
+        token.immediate(PUNC().eq),
+        field(FIELD().value, alias(token(/[^\s\]]*/), $.text)),
       ),
 
     documentation: ($) => {

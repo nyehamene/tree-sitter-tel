@@ -1,5 +1,46 @@
 [
   {
+    "type": "attr",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      },
+      "val": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "text",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "attrs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "component",
     "named": true,
     "fields": {
@@ -71,7 +112,7 @@
     }
   },
   {
-    "type": "def_template",
+    "type": "def_templ",
     "named": true,
     "fields": {
       "type": {
@@ -96,11 +137,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "documentation",
+          "named": true
+        },
+        {
+          "type": "element",
           "named": true
         }
       ]
@@ -120,6 +165,32 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "element",
+    "named": true,
+    "fields": {
+      "tag": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "attrs",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -161,7 +232,7 @@
           "named": true
         },
         {
-          "type": "def_template",
+          "type": "def_templ",
           "named": true
         },
         {
@@ -181,6 +252,18 @@
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {
@@ -212,7 +295,11 @@
     "named": false
   },
   {
-    "type": "template",
+    "type": "templ",
     "named": false
+  },
+  {
+    "type": "text",
+    "named": true
   }
 ]

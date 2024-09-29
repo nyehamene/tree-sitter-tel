@@ -33,12 +33,12 @@ template
 ===
 
 # template
-template m Model do end
+templ m Model do end
 
 ---
 
 (source
-    (def_template
+    (def_templ
         (documentation
             target: (ident))
         var: (ident)

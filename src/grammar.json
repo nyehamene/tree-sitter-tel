@@ -50,6 +50,10 @@
           {
             "type": "PATTERN",
             "value": "[a-z_][a-z_]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[a-z][a-z-]*"
           }
         ]
       }
@@ -86,7 +90,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "def_template"
+          "name": "def_templ"
         }
       ]
     },
@@ -229,7 +233,7 @@
         }
       ]
     },
-    "def_template": {
+    "def_templ": {
       "type": "SEQ",
       "members": [
         {
@@ -246,7 +250,7 @@
         },
         {
           "type": "STRING",
-          "value": "template"
+          "value": "templ"
         },
         {
           "type": "FIELD",
@@ -279,8 +283,96 @@
           "value": "do"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "element"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "end"
+        }
+      ]
+    },
+    "element": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "FIELD",
+          "name": "tag",
+          "content": {
+            "type": "SYMBOL",
+            "name": "ident"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "attrs"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
+    "attrs": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "attr"
+      }
+    },
+    "attr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "ident"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "="
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "val",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[^\\s\\]]*"
+              }
+            },
+            "named": true,
+            "value": "text"
+          }
         }
       ]
     },
