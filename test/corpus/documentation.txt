@@ -17,20 +17,32 @@ namespace demo;
 record
 ===
 
-namespace demo;
-
 # Model
 def Model record end
 
 ---
 
 (source
-    (namespace
-        name: (ident))
     (def_record
         (documentation
             target: (ident))
         name: (ident)))
+
+===
+template
+===
+
+# template
+template m Model do end
+
+---
+
+(source
+    (def_template
+        (documentation
+            target: (ident))
+        var: (ident)
+        type: (ident)))
 
 ===
 multi line

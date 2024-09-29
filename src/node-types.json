@@ -94,6 +94,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "documentation",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -111,11 +121,6 @@
         ]
       }
     }
-  },
-  {
-    "type": "ident",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "namespace",
@@ -167,10 +172,6 @@
     }
   },
   {
-    "type": "",
-    "named": false
-  },
-  {
     "type": "\n",
     "named": false
   },
@@ -197,6 +198,10 @@
   {
     "type": "end",
     "named": false
+  },
+  {
+    "type": "ident",
+    "named": true
   },
   {
     "type": "namespace",

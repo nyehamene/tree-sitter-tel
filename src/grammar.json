@@ -1,5 +1,6 @@
 {
   "name": "tel",
+  "word": "ident",
   "rules": {
     "source": {
       "type": "CHOICE",
@@ -8,8 +9,16 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "namespace"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "namespace"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -24,6 +33,74 @@
           "type": "BLANK"
         }
       ]
+    },
+    "ident": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[A-Z][A-Za-z0-9]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[a-z_][A-Za-z0-9]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[a-z_][a-z_]*"
+          }
+        ]
+      }
+    },
+    "comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "##"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\n]*"
+            },
+            {
+              "type": "STRING",
+              "value": "\n"
+            }
+          ]
+        }
+      }
+    },
+    "_toplevel_stmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "def_record"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "def_template"
+        }
+      ]
+    },
+    "record_components": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "record_component"
+        },
+        "named": true,
+        "value": "component"
+      }
     },
     "namespace": {
       "type": "SEQ",
@@ -51,7 +128,7 @@
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
-              "name": "ns_ident"
+              "name": "ident"
             },
             "named": true,
             "value": "ident"
@@ -63,16 +140,38 @@
         }
       ]
     },
-    "_toplevel_stmt": {
-      "type": "CHOICE",
+    "record_component": {
+      "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "def_record"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "ident"
+            },
+            "named": true,
+            "value": "ident"
+          }
         },
         {
-          "type": "SYMBOL",
-          "name": "def_template"
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "ident"
+            },
+            "named": true,
+            "value": "ident"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -99,13 +198,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "type_ident"
-            },
-            "named": true,
-            "value": "ident"
+            "type": "SYMBOL",
+            "name": "ident"
           }
         },
         {
@@ -135,56 +229,21 @@
         }
       ]
     },
-    "record_components": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "SYMBOL",
-          "name": "record_component"
-        },
-        "named": true,
-        "value": "component"
-      }
-    },
-    "record_component": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "var_ident"
-            },
-            "named": true,
-            "value": "ident"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "type",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "type_ident"
-            },
-            "named": true,
-            "value": "ident"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ";"
-        }
-      ]
-    },
     "def_template": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "documentation"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "template"
@@ -196,7 +255,7 @@
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
-              "name": "var_ident"
+              "name": "ident"
             },
             "named": true,
             "value": "ident"
@@ -209,7 +268,7 @@
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
-              "name": "type_ident"
+              "name": "ident"
             },
             "named": true,
             "value": "ident"
@@ -225,39 +284,42 @@
         }
       ]
     },
-    "type_ident": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[A-Z][a-zA-Z]*"
-      }
-    },
-    "var_ident": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[a-z][a-z_]*"
-      }
-    },
-    "ns_ident": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "var_ident"
-      },
-      "named": false,
-      "value": ""
-    },
-    "comment": {
-      "type": "TOKEN",
-      "content": {
-        "type": "REPEAT1",
-        "content": {
+    "documentation": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "SEQ",
           "members": [
             {
               "type": "STRING",
-              "value": "##"
+              "value": "#"
+            },
+            {
+              "type": "FIELD",
+              "name": "target",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "ident"
+                    },
+                    "named": true,
+                    "value": "ident"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "ident"
+                    },
+                    "named": true,
+                    "value": "ident"
+                  }
+                ]
+              }
             },
             {
               "type": "PATTERN",
@@ -268,70 +330,37 @@
               "value": "\n"
             }
           ]
-        }
-      }
-    },
-    "documentation": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "#"
         },
         {
-          "type": "FIELD",
-          "name": "target",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "ALIAS",
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "REPEAT",
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "type_ident"
-                },
-                "named": true,
-                "value": "ident"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "var_ident"
-                },
-                "named": true,
-                "value": "ident"
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "#"
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "[^\\n]*"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "\n"
+                    }
+                  ]
+                }
               }
-            ]
-          }
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\\n]*"
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "#"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[^\\n]*"
-              },
-              {
-                "type": "STRING",
-                "value": "\n"
-              }
-            ]
-          }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     }

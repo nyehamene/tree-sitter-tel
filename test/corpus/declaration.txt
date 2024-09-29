@@ -11,25 +11,20 @@ namespace demo;
         name: (ident)))
 
 ===
-record: empty
+record: 0
 ===
 
-namespace demo;
 def Model record end
 
 ---
 
 (source
-    (namespace
-        name: (ident))
     (def_record
         name: (ident)))
 
 ===
-record
+record: 1
 ===
-
-namespace demo;
 
 def Model record
     name String;
@@ -38,8 +33,6 @@ def Model record
 ---
 
 (source
-    (namespace
-        name: (ident))
     (def_record
         name: (ident)
         (components
@@ -48,18 +41,37 @@ def Model record
                 type: (ident)))))
 
 ===
-template: empty
+record: 2
 ===
 
-namespace demo;
+def Model record
+    name String;
+    item String;
+    end
+
+---
+
+(source
+    (def_record
+        name: (ident)
+        (components
+            (component
+                name: (ident)
+                type: (ident))
+            (component
+                name: (ident)
+                type: (ident)))))
+
+===
+template: 0
+===
 
 template m Model do end
 
 ---
 
 (source
-    (namespace
-        name: (ident))
     (def_template
         var: (ident)
         type: (ident)))
+
