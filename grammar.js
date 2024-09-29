@@ -11,6 +11,7 @@ module.exports = grammar({
 
     namespace: ($) =>
       seq(
+        optional($.documentation),
         KEYWORD().namespace,
         field(FIELD().name, alias($.ns_ident, $.ident)),
         PUNC().semi_colon,
@@ -20,6 +21,7 @@ module.exports = grammar({
 
     def_record: ($) =>
       seq(
+        optional($.documentation),
         KEYWORD().def,
         field(FIELD().name, alias($.type_ident, $.ident)),
         KEYWORD().record,
@@ -43,6 +45,22 @@ module.exports = grammar({
     ns_ident: ($) => alias($.var_ident, ""),
 
     comment: () => token(seq(PUNC().d_hash, /[^\n]*/, "\n")),
+
+    documentation: ($) =>
+      seq(
+        PUNC().hash,
+        field(
+          FIELD().target,
+          choice(
+            alias($.type_ident, $.ident),
+            // alias($.ns_ident, $.ident), // fix using precedence
+            alias($.var_ident, $.ident),
+          ),
+        ),
+        /[^\n]*/,
+        "\n",
+        repeat(seq(PUNC().hash, /[^\n]*/, "\n")),
+      ),
   },
 });
 
@@ -50,6 +68,7 @@ function FIELD() {
   return {
     name: "name",
     type: "type",
+    target: "target",
   };
 }
 

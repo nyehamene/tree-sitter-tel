@@ -2,27 +2,15 @@
 namespace
 ===
 
+# demo
 namespace demo;
 
 ---
 
 (source
     (namespace
-        name: (ident)))
-
-===
-record: empty
-===
-
-namespace demo;
-def Model record end
-
----
-
-(source
-    (namespace
-        name: (ident))
-    (def_record
+        (documentation
+            target: (ident))
         name: (ident)))
 
 ===
@@ -31,9 +19,8 @@ record
 
 namespace demo;
 
-def Model record
-    name String;
-    end
+# Model
+def Model record end
 
 ---
 
@@ -41,8 +28,23 @@ def Model record
     (namespace
         name: (ident))
     (def_record
-        name: (ident)
-        (components
-            (component
-                name: (ident)
-                type: (ident)))))
+        (documentation
+            target: (ident))
+        name: (ident)))
+
+===
+multi line
+===
+
+# demo line 1
+# line 2
+# line 3
+namespace demo;
+
+---
+
+(source
+    (namespace
+        (documentation
+            target: (ident))
+        name: (ident)))

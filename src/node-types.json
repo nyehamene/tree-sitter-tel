@@ -56,14 +56,34 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "components",
           "named": true
+        },
+        {
+          "type": "documentation",
+          "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "documentation",
+    "named": true,
+    "fields": {
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -85,6 +105,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "documentation",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -108,6 +138,14 @@
   },
   {
     "type": "",
+    "named": false
+  },
+  {
+    "type": "\n",
+    "named": false
+  },
+  {
+    "type": "#",
     "named": false
   },
   {

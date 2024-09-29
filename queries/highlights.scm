@@ -6,3 +6,5 @@
 ] @keyword
 
 (comment) @comment
+
+(documentation) @comment.documentation
