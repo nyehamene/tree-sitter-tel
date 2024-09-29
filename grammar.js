@@ -53,7 +53,7 @@ module.exports = grammar({
 
     ns_ident: ($) => alias($.var_ident, ""),
 
-    comment: () => token(seq(PUNC().d_hash, /[^\n]*/, "\n")),
+    comment: () => token(repeat1(seq(PUNC().d_hash, /[^\n]*/, "\n"))),
 
     documentation: ($) =>
       seq(

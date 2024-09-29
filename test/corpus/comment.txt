@@ -30,7 +30,6 @@ multi line
 ---
 
 (source
-    (comment)
     (comment))
 
 ===
