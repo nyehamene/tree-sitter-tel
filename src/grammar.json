@@ -69,6 +69,10 @@
         {
           "type": "SYMBOL",
           "name": "def_record"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "def_template"
         }
       ]
     },
@@ -175,6 +179,49 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "def_template": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "template"
+        },
+        {
+          "type": "FIELD",
+          "name": "var",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "var_ident"
+            },
+            "named": true,
+            "value": "ident"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "type_ident"
+            },
+            "named": true,
+            "value": "ident"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "STRING",
+          "value": "end"
         }
       ]
     },

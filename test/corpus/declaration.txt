@@ -46,3 +46,20 @@ def Model record
             (component
                 name: (ident)
                 type: (ident)))))
+
+===
+template: empty
+===
+
+namespace demo;
+
+template m Model do end
+
+---
+
+(source
+    (namespace
+        name: (ident))
+    (def_template
+        var: (ident)
+        type: (ident)))

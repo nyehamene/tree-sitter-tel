@@ -3,6 +3,8 @@
     "end"
     "namespace"
     "record"
+    "do"
+    "template"
 ] @keyword
 
 (comment) @comment

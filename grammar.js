@@ -17,7 +17,7 @@ module.exports = grammar({
         PUNC().semi_colon,
       ),
 
-    _toplevel_stmt: ($) => choice($.def_record),
+    _toplevel_stmt: ($) => choice($.def_record, $.def_template),
 
     def_record: ($) =>
       seq(
@@ -36,6 +36,15 @@ module.exports = grammar({
         field(FIELD().name, alias($.var_ident, $.ident)),
         field(FIELD().type, alias($.type_ident, $.ident)),
         PUNC().semi_colon,
+      ),
+
+    def_template: ($) =>
+      seq(
+        KEYWORD().template,
+        field(FIELD().var, alias($.var_ident, $.ident)),
+        field(FIELD().type, alias($.type_ident, $.ident)),
+        KEYWORD().do,
+        KEYWORD().end,
       ),
 
     type_ident: () => token(/[A-Z][a-zA-Z]*/),
@@ -69,6 +78,7 @@ function FIELD() {
     name: "name",
     type: "type",
     target: "target",
+    var: "var",
   };
 }
 
@@ -78,6 +88,8 @@ function KEYWORD() {
     record: "record",
     end: "end",
     def: "def",
+    do: "do",
+    template: "template",
   };
 }
 

@@ -71,6 +71,32 @@
     }
   },
   {
+    "type": "def_template",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      },
+      "var": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "documentation",
     "named": true,
     "fields": {
@@ -130,6 +156,10 @@
           "named": true
         },
         {
+          "type": "def_template",
+          "named": true
+        },
+        {
           "type": "namespace",
           "named": true
         }
@@ -161,6 +191,10 @@
     "named": false
   },
   {
+    "type": "do",
+    "named": false
+  },
+  {
     "type": "end",
     "named": false
   },
@@ -170,6 +204,10 @@
   },
   {
     "type": "record",
+    "named": false
+  },
+  {
+    "type": "template",
     "named": false
   }
 ]
