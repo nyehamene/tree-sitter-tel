@@ -1,63 +1,57 @@
 ===
-element: 0
+empty
 ===
 
-templ m Model do
-    [div]
-    end
+[div]
+
 ---
 
-(source
-    (def_templ
-        var: (ident)
-        type: (ident)
-        (element tag: (ident))))
+(source (element tag: (ident)))
 
 ===
-element: 1
+attr-1
 ===
 
-templ m Model do
-    [div k1=value]
-    end
+[div k1=value]
 
 ---
 
 (source
-    (def_templ
-        var: (ident)
-        type: (ident)
-        (element
-            tag: (ident)
-            (attrs
-                (attr
-                    key: (ident)
-                    val: (text))))))
+    (element
+        tag: (ident)
+        (attrs (attr
+            key: (ident)
+            val: (text)))))
 
 ===
-element: 2
+attr-2
 ===
 
-templ m Model do
-    [div
-        k1=value
-        k2=value
-        ]
-    end
+[div
+    k1=value
+    k2=value
+    ]
 
 ---
 
 (source
-    (def_templ
-        var: (ident)
-        type: (ident)
-        (element
-            tag: (ident)
-            (attrs
-                (attr
-                    key: (ident)
-                    val: (text))
-                (attr
-                    key: (ident)
-                    val: (text))))))
+    (element
+        tag: (ident)
+        (attrs
+            (attr
+                key: (ident)
+                val: (text))
+            (attr
+                key: (ident)
+                val: (text)))))
+
+===
+keyword
+===
+
+[:script]
+
+---
+
+(source (element keyword: (ident)))
 

@@ -16,6 +16,7 @@ function FIELD() {
     var: "var",
     key: "key",
     value: "val",
+    keyword: "keyword",
   };
 }
 
@@ -38,6 +39,10 @@ function PUNC() {
     bracketLeft: "[",
     bracketRight: "]",
     eq: "=",
+    parLeft: "(",
+    parRight: ")",
+    backSlash: "\\",
+    colon: ":",
   };
 }
 
@@ -57,7 +62,15 @@ module.exports = grammar({
 
     comment: () => token(repeat1(seq(PUNC().hashDouble, /[^\n]*/, "\n"))),
 
-    _toplevel_stmt: ($) => choice($.def_record, $.def_templ),
+    _toplevel_stmt: ($) => choice($.def_record, $.def_templ, $._stmt),
+
+    _stmt: ($) => choice($.element, $.expr, $.escape_char),
+
+    escape_char: ($) =>
+      choice(
+        token(seq(PUNC().backSlash, PUNC().bracketLeft)),
+        token(seq(PUNC().backSlash, PUNC().parLeft)),
+      ),
 
     record_components: ($) => repeat1(alias($.record_component, $.component)),
 
@@ -97,12 +110,22 @@ module.exports = grammar({
         KEYWORD().end,
       ),
 
+    expr: ($) => seq(PUNC().parLeft, $.ident, PUNC().parRight),
+
     element: ($) =>
-      seq(
-        PUNC().bracketLeft,
-        field(FIELD().tag, $.ident),
-        optional($.attrs),
-        PUNC().bracketRight,
+      choice(
+        seq(
+          PUNC().bracketLeft,
+          field(FIELD().tag, $.ident),
+          optional($.attrs),
+          PUNC().bracketRight,
+        ),
+        seq(
+          token(seq(PUNC().bracketLeft, PUNC().colon)),
+          field(FIELD().keyword, $.ident),
+          optional($.attrs),
+          PUNC().bracketRight,
+        ),
       ),
 
     attrs: ($) => repeat1($.attr),
@@ -118,14 +141,7 @@ module.exports = grammar({
       let docContinued = token(repeat(seq(PUNC().hash, /[^\n]*/, "\n")));
       let doc = seq(
         PUNC().hash,
-        field(
-          FIELD().target,
-          choice(
-            alias($.ident, $.ident),
-            // alias($.ident, $.ident), // fix using precedence
-            alias($.ident, $.ident),
-          ),
-        ),
+        field(FIELD().target, $.ident),
         /[^\n]*/,
         "\n",
       );
