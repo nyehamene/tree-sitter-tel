@@ -55,3 +55,28 @@ keyword
 
 (source (element keyword: (ident)))
 
+===
+nesting-element
+===
+
+[div [p]]
+
+---
+
+(source
+    (element
+        tag: (ident)
+        (element
+            tag: (ident))))
+
+===
+nesting-expr
+===
+
+[div (foo)]
+
+---
+
+(source
+    (element tag: (ident)
+        (expr (ident))))

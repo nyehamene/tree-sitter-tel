@@ -118,15 +118,19 @@ module.exports = grammar({
           PUNC().bracketLeft,
           field(FIELD().tag, $.ident),
           optional($.attrs),
+          optional($._children),
           PUNC().bracketRight,
         ),
         seq(
           token(seq(PUNC().bracketLeft, PUNC().colon)),
           field(FIELD().keyword, $.ident),
           optional($.attrs),
+          optional($._children),
           PUNC().bracketRight,
         ),
       ),
+
+    _children: ($) => choice($.element, $.expr),
 
     attrs: ($) => repeat1($.attr),
 
