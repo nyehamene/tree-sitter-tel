@@ -39,4 +39,11 @@
   key: (ident) @tag.attribute @property
   val: (text) @string)
 
+(attr
+  "=" @punctuation.delimiter)
+
 (expr (ident)) @function.call
+
+(expr
+  "(" @punctuation.bracket
+  ")" @punctuation.bracket)
