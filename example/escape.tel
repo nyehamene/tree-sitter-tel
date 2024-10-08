@@ -1,0 +1,12 @@
+namespace demo;
+
+def Model record
+    name String;
+    end
+
+templ m Model do
+    \[div]
+    \(escaped)
+    [div \(foo)]
+    end
+

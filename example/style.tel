@@ -1,0 +1,33 @@
+namespace demo;
+
+def Model record
+    name String;
+    age int;
+    end
+
+templ m Model do
+    [:style
+        body {
+          display: none;
+        }
+    ]
+
+    [:style ()
+        body {
+          display: none;
+        }
+    ]
+
+    [:style (name, age)
+        main::before {
+            content: var(--tel-var-name) ' ' var(--tel-var-age);
+        }
+    ]
+
+    [:style (a-name: m.name, an-age: m.name)
+        main::before {
+            content: var(--tel-var-a-name) ' ' var(--tel-var-an-age);
+        }
+    ]
+    end
+

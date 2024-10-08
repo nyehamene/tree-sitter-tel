@@ -1,0 +1,12 @@
+namespace demo;
+
+def Model record
+    end
+
+templ m Model do
+    []
+    ()
+    [div []]
+    [div ()]
+    end
+

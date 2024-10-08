@@ -1,0 +1,15 @@
+namespace demo;
+
+def Model record
+    age Int;
+    end
+
+templ m Model do
+    (m.age - 1)
+    (m.age + 1)
+    (m.age * m.age)
+    (100 / m.age)
+    (10 + 2 / 3 * 3 - 1)
+    ((2 8 2) / 2)
+    end
+

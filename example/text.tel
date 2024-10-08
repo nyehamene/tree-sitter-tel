@@ -1,0 +1,42 @@
+namespace demo;
+
+def Model record
+    name String;
+    end
+
+templ m Model do
+    The quick brow fox jumped over the lazy dog!
+    end
+
+templ m Model do
+    "The quick brow fox jumped over the lazy dog!"
+    end
+
+templ m Model do
+    'The quick brow fox jumped over the lazy dog!'
+    end
+
+templ m Model do
+    [div
+       The quick brown fox jumped over the lazy dog!]
+    end
+
+templ m Model do
+    text
+    100
+    "text"
+    'text'
+    [div content]
+    [div 100]
+    [div "text"]
+    end
+
+templ m Model do
+    [p
+      [strong quick brown [em fox]]
+      jumped
+      [em the lazy dog]
+      !
+      ]
+    end
+

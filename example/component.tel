@@ -1,0 +1,20 @@
+namespace demo;
+
+def Model record
+    name String;
+    item Item;
+    items []Item;
+    end
+
+def Item record
+    name string;
+    end
+
+templ m Model do
+    [Model model=(h.model)]
+    [Item foreach=(items)]
+    end
+
+templ m Item do
+    (m.name)
+    end

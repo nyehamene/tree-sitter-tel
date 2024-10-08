@@ -38,3 +38,5 @@
 (attr
   key: (ident) @tag.attribute @property
   val: (text) @string)
+
+(expr (ident)) @function.call

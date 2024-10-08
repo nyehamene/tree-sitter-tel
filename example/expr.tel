@@ -1,0 +1,43 @@
+namespace demo;
+
+def Model record
+    item []Item;
+    end
+
+def Item record
+    name String;
+    end
+
+templ m Item do
+    [span (m.name)]
+    end
+
+templ m Model do
+    (100)
+    (true)
+    (false)
+    (ident)
+    (foo.bar)
+    ("str")
+    ('str')
+    ("\{ident}")
+    ('\{ident}')
+    ('\{ident.member}')
+    ("\{ident.member}")
+
+    (:foreach (item, i : m.items)
+        [span (i + 1)]
+        [Item model=(m.item)]
+        )
+
+    [div (100)]
+    [div (foo)]
+    [div (true)]
+    [div (false)]
+    [div (foo.bar)]
+    [div ("text")]
+    [div ('text')]
+    [div ("\(ident)")]
+    [div ("\(foo.bar)")]
+    end
+

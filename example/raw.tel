@@ -1,0 +1,20 @@
+namespace demo;
+
+def Model record
+    name String;
+    end
+
+templ m Model do
+    [:raw
+      <div>Hello World!</div>
+    ]
+
+    [:raw ()
+      <div>Hello World!</div>
+    ]
+
+    [:raw (name)
+      <div>Hello (name)!</div>
+    ]
+    end
+

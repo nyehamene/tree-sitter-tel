@@ -1,0 +1,46 @@
+## define a component
+namespace my_component;
+
+## define a record name User
+def User record
+    name String;
+    email String;
+    phone String;
+    end
+
+## define a template for the User record
+templ u User do
+    [div
+        class="user"
+        data-model="product-owner"
+        [h1 (u.name)]
+        [p
+            [label "email"
+                [span (u.name)]
+                ]
+            ]
+        [p
+            [label "phone"
+                [span (u.phone)]
+                ]
+            ]
+        ]
+    end
+
+## define a record named Product
+def Product record
+    name String;
+    price Float;
+    owner User;
+    end
+
+## define a template for the Product record
+templ p Product do
+    [div
+        class="product"
+        [h1 (p.name)]
+        [p (p.description)]
+        [User (p.owner)]
+        ]
+    end
+

@@ -1,0 +1,31 @@
+namespace demo;
+
+def Model record
+    end
+
+templ m Model do
+    [div]
+    [div key=foo]
+    [div key=100]
+    [div key="model"]
+    [div key='model']
+    [div key=true]
+    [div key=false]
+
+    [div
+       id=text
+       num=100
+       str="foo"
+       ]
+
+    [div [p]]
+
+    [div
+       [p id=foo]
+       ]
+
+    [div id=foo
+       [p id=bar]
+       ]
+    end
+

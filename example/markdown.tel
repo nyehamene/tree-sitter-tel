@@ -1,0 +1,30 @@
+namespace demo;
+
+def Model record
+    name String;
+    age int;
+    end
+
+templ m Model do
+    [:markdown
+      # Heading
+
+      - Item 1
+      - Item 2
+    ]
+
+    [:markdown ()
+      # Heading
+
+      - Item 1
+      - Item 2
+    ]
+
+    [:markdown (name, age)
+      # Heading
+
+      - (name)
+      - (age)
+    ]
+    end
+

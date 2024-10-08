@@ -1,0 +1,21 @@
+namespace demo;
+
+def Model record
+    name String;
+    age int;
+    end
+
+templ m Model do
+    [:script
+        console.log("Hello, world!")]
+
+    [:script ()
+        console.log("Hello, world!")]
+
+    [:script (name, age)
+        console.log(name, age)]
+
+    [:script (theName: m.name, theAge: m.age)
+        console.log(theName, theAge)]
+    end
+
