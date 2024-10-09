@@ -344,8 +344,13 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "element"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "templ_body"
+              },
+              "named": true,
+              "value": "body"
             },
             {
               "type": "BLANK"
@@ -357,6 +362,13 @@
           "value": "end"
         }
       ]
+    },
+    "templ_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_stmt"
+      }
     },
     "expr": {
       "type": "SEQ",

@@ -63,7 +63,7 @@ def Model record
                 type: (ident)))))
 
 ===
-template: 0
+template-0
 ===
 
 templ m Model do end
@@ -75,3 +75,58 @@ templ m Model do end
         var: (ident)
         type: (ident)))
 
+
+===
+template-1
+===
+
+templ m Model do
+    [div]
+    end
+
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (body
+            (element tag: (ident)))))
+
+===
+template-2
+===
+
+templ m Model do
+    [div [p]]
+    end
+
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (body
+            (element tag: (ident)
+                (elements
+                    (element tag: (ident)))))))
+
+===
+template-3
+===
+
+templ m Model do
+    [div]
+    [div]
+    end
+
+---
+
+(source
+    (def_templ
+        var: (ident)
+        type: (ident)
+        (body
+            (element tag: (ident))
+            (element tag: (ident)))))

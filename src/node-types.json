@@ -41,6 +41,29 @@
     }
   },
   {
+    "type": "body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "escape_char",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "component",
     "named": true,
     "fields": {
@@ -141,11 +164,11 @@
       "required": false,
       "types": [
         {
-          "type": "documentation",
+          "type": "body",
           "named": true
         },
         {
-          "type": "element",
+          "type": "documentation",
           "named": true
         }
       ]
