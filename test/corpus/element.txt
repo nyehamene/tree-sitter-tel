@@ -56,6 +56,18 @@ keyword
 (source (element keyword: (ident)))
 
 ===
+elements
+===
+
+[div]
+[div]
+
+---
+(source
+    (element tag: (ident))
+    (element tag: (ident)))
+
+===
 nesting-element
 ===
 
@@ -66,8 +78,29 @@ nesting-element
 (source
     (element
         tag: (ident)
-        (element
-            tag: (ident))))
+        (elements
+            (element tag: (ident)))))
+
+===
+nesting-element-2
+===
+
+[div
+   [p]
+   [p [span]]
+   ]
+
+---
+
+(source
+    (element
+        tag: (ident)
+        (elements
+            (element tag: (ident))
+            (element tag: (ident)
+                (elements
+                    (element tag: (ident)))))))
+
 
 ===
 nesting-expr
@@ -79,4 +112,5 @@ nesting-expr
 
 (source
     (element tag: (ident)
-        (expr (ident))))
+        (elements
+            (expr (ident)))))

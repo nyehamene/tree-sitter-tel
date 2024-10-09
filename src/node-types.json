@@ -201,7 +201,26 @@
           "named": true
         },
         {
+          "type": "elements",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "elements",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "element",
+          "named": true
+        },
+        {
+          "type": "escape_char",
           "named": true
         },
         {
