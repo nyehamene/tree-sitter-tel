@@ -25,7 +25,6 @@ function KEYWORD() {
     namespace: "namespace",
     record: "record",
     end: "end",
-    def: "def",
     do: "do",
     templ: "templ",
   };
@@ -89,10 +88,9 @@ module.exports = grammar({
 
     def_record: ($) =>
       seq(
-        KEYWORD().def,
-        field(FIELD().name, $.ident /* alias($.ident, $.ident) */),
         KEYWORD().record,
-        optional(alias($.record_components, $.components)),
+        field(FIELD().name, $.ident /* alias($.ident, $.ident) */),
+        optional(seq(KEYWORD().do, alias($.record_components, $.components))),
         KEYWORD().end,
       ),
 
@@ -101,8 +99,7 @@ module.exports = grammar({
         KEYWORD().templ,
         field(FIELD().var, alias($.ident, $.ident)),
         field(FIELD().type, alias($.ident, $.ident)),
-        KEYWORD().do,
-        optional(alias($.templ_body, $.body)),
+        optional(seq(KEYWORD().do, alias($.templ_body, $.body))),
         KEYWORD().end,
       ),
 

@@ -17,7 +17,7 @@ record
 ===
 
 /// Model
-def Model record end
+record Model end
 
 ---
 
@@ -31,7 +31,7 @@ template
 ===
 
 // template
-templ m Model do end
+templ m Model end
 
 ---
 

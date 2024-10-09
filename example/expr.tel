@@ -1,10 +1,10 @@
 namespace demo;
 
-def Model record
+record Model do
     item []Item;
     end
 
-def Item record
+record Item do
     name String;
     end
 

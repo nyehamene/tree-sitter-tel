@@ -11,10 +11,10 @@ namespace demo;
         name: (ident)))
 
 ===
-record: 0
+record-0
 ===
 
-def Model record end
+record Model end
 
 ---
 
@@ -23,10 +23,17 @@ def Model record end
         name: (ident)))
 
 ===
-record: 1
+record-1
+:error
 ===
 
-def Model record
+record Model do end
+
+===
+record-2
+===
+
+record Model do
     name String;
     end
 
@@ -41,10 +48,10 @@ def Model record
                 type: (ident)))))
 
 ===
-record: 2
+record-3
 ===
 
-def Model record
+record Model do
     name String;
     item String;
     end
@@ -66,7 +73,7 @@ def Model record
 template-0
 ===
 
-templ m Model do end
+templ m Model end
 
 ---
 
@@ -75,9 +82,15 @@ templ m Model do end
         var: (ident)
         type: (ident)))
 
-
 ===
 template-1
+:error
+===
+
+templ m Model do end
+
+===
+template-2
 ===
 
 templ m Model do

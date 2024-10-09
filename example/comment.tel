@@ -5,7 +5,7 @@
 namespace demo;
 
 /// comment before record
-def Model record
+record Model do
     /// comment before component
     name String;
     age int; /// a trailing comment

@@ -1,6 +1,6 @@
 namespace demo;
 
-def Model record
+record Model do
     age Int;
     end
 

@@ -1,5 +1,4 @@
 [
-    "def"
     "end"
     "namespace"
     "record"

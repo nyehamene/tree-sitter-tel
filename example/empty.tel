@@ -1,7 +1,6 @@
 namespace demo;
 
-def Model record
-    end
+record Model end
 
 templ m Model do
     []

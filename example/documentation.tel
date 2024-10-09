@@ -6,12 +6,12 @@
 namespace demo;
 
 // Model is a record
-def Model record
+record Model do
     // age is a component of the record.
     name String;
     end
 
 /// template definitions cannot have documentation because they have no name
 /// therefore, cannot be a target for documentation.
-templ m Model do end
+templ m Model end
 

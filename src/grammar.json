@@ -238,7 +238,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "def"
+          "value": "record"
         },
         {
           "type": "FIELD",
@@ -249,20 +249,25 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "record"
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "record_components"
-              },
-              "named": true,
-              "value": "components"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "do"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "record_components"
+                  },
+                  "named": true,
+                  "value": "components"
+                }
+              ]
             },
             {
               "type": "BLANK"
@@ -309,20 +314,25 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "do"
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "templ_body"
-              },
-              "named": true,
-              "value": "body"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "do"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "templ_body"
+                  },
+                  "named": true,
+                  "value": "body"
+                }
+              ]
             },
             {
               "type": "BLANK"
