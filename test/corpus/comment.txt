@@ -2,41 +2,55 @@
 empty
 ===
 
-##
+//
+
+///
 
 ---
 
 (source
+    (comment)
     (comment))
 
 ===
 single line
 ===
 
-## This is a comment
+// This is a comment
+
+/// This is another comment
 
 ---
 
 (source
+    (comment)
     (comment))
 
 ===
 multi line
 ===
 
-## This is line 1
-## This is line 2
+// This is line 1
+// This is line 2
+
+/// This is line 1
+/// This is line 2
+
+// This is line 1
+/// This is line 2
 
 ---
 
 (source
+    (comment)
+    (comment)
     (comment))
 
 ===
 trailing
 ===
 
-namespace demo; ## This is a trailing comment
+namespace demo; /// This is a trailing comment
 
 ---
 

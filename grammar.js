@@ -33,8 +33,7 @@ function KEYWORD() {
 
 function PUNC() {
   return {
-    hash: "#",
-    hashDouble: "##",
+    forwardSlash: "/",
     semiColon: ";",
     bracketLeft: "[",
     bracketRight: "]",
@@ -60,7 +59,7 @@ module.exports = grammar({
     ident: ($) =>
       token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE)),
 
-    comment: () => token(repeat1(seq(PUNC().hashDouble, /[^\n]*/, "\n"))),
+    comment: ($) => token(repeat1(seq(/\/\/*/, /[^\n]*/, optional("\n")))),
 
     _toplevel_stmt: ($) => choice($.def_record, $.def_templ, $._stmt),
 
@@ -76,7 +75,6 @@ module.exports = grammar({
 
     namespace: ($) =>
       seq(
-        optional($.documentation),
         KEYWORD().namespace,
         field(FIELD().name, alias($.ident, $.ident)),
         PUNC().semiColon,
@@ -91,7 +89,6 @@ module.exports = grammar({
 
     def_record: ($) =>
       seq(
-        optional($.documentation),
         KEYWORD().def,
         field(FIELD().name, $.ident /* alias($.ident, $.ident) */),
         KEYWORD().record,
@@ -101,7 +98,6 @@ module.exports = grammar({
 
     def_templ: ($) =>
       seq(
-        optional($.documentation),
         KEYWORD().templ,
         field(FIELD().var, alias($.ident, $.ident)),
         field(FIELD().type, alias($.ident, $.ident)),
@@ -142,16 +138,5 @@ module.exports = grammar({
         token.immediate(PUNC().eq),
         field(FIELD().value, alias(token(/[^\s\]]*/), $.text)),
       ),
-
-    documentation: ($) => {
-      let docContinued = token(repeat(seq(PUNC().hash, /[^\n]*/, "\n")));
-      let doc = seq(
-        PUNC().hash,
-        field(FIELD().target, $.ident),
-        /[^\n]*/,
-        "\n",
-      );
-      return seq(doc, optional(docContinued));
-    },
   },
 });

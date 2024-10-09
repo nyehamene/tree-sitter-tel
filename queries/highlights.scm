@@ -9,8 +9,6 @@
 
 (comment) @comment
 
-(documentation) @comment.documentation
-
 (namespace
   name: (ident) @module)
 

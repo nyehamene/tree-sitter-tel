@@ -1,15 +1,16 @@
-## a simple line comment
+/// comments in tel starts with 3 or more / (forward slash)
+/// and continues until the end of the line
 
-# demo is a namespace. This a documentation
+/// comment before namespace
 namespace demo;
 
-# Model record definition. A documentation for the Model record
+/// comment before record
 def Model record
-    name String; ## a trailing comment
-    # age of the model.  Field/property documentation is supported
-    age int;
+    /// comment before component
+    name String;
+    age int; /// a trailing comment
     end
 
-## Model record definition. A templ cannot has a documentation
+/// comment before temple
 templ m Model do end
 

@@ -2,45 +2,42 @@
 namespace
 ===
 
-# demo
+// demo
 namespace demo;
 
 ---
 
 (source
+    (comment)
     (namespace
-        (documentation
-            target: (ident))
         name: (ident)))
 
 ===
 record
 ===
 
-# Model
+/// Model
 def Model record end
 
 ---
 
 (source
+    (comment)
     (def_record
-        (documentation
-            target: (ident))
         name: (ident)))
 
 ===
 template
 ===
 
-# template
+// template
 templ m Model do end
 
 ---
 
 (source
+    (comment)
     (def_templ
-        (documentation
-            target: (ident))
         var: (ident)
         type: (ident)))
 
@@ -48,16 +45,15 @@ templ m Model do end
 multi line
 ===
 
-# demo line 1
-# line 2
-# line 3
+// demo line 1
+/// line 2
+// line 3
 namespace demo;
 
 ---
 
 (source
+    (comment)
     (namespace
-        (documentation
-            target: (ident))
         name: (ident)))
 
