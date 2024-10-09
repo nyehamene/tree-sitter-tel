@@ -58,7 +58,7 @@ module.exports = grammar({
     ident: ($) =>
       token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE)),
 
-    comment: ($) => token(repeat1(seq(/\/\/*/, /[^\n]*/, optional("\n")))),
+    comment: ($) => token(repeat1(seq(/\/\/+/, /[^\n]*/, optional("\n")))),
 
     _toplevel_stmt: ($) => choice($.def_record, $.def_templ, $._stmt),
 
