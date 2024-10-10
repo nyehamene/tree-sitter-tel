@@ -105,7 +105,11 @@ module.exports = grammar({
 
     templ_body: ($) => repeat1($._stmt),
 
-    expr: ($) => seq(PUNC().parLeft, $.ident, PUNC().parRight),
+    expr: ($) =>
+      seq(PUNC().parLeft, choice($.ident, $.field_access), PUNC().parRight),
+
+    field_access: ($) =>
+      seq(field("object", $.ident), ".", field("field", $.ident)),
 
     element: ($) =>
       choice(

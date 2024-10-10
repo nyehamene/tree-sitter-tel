@@ -44,3 +44,11 @@
 (expr
   "(" @punctuation.bracket
   ")" @punctuation.bracket)
+
+(field_access
+  object: (ident) @variable
+  field: (ident) @variable.member)
+
+(field_access
+  "." @punctuation.delimiter)
+

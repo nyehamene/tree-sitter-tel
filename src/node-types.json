@@ -243,10 +243,40 @@
       "required": true,
       "types": [
         {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "ident",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "field_access",
+    "named": true,
+    "fields": {
+      "field": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      },
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -306,6 +336,10 @@
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": ".",
     "named": false
   },
   {

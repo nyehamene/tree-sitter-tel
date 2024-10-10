@@ -7,3 +7,17 @@ ident
 ---
 
 (source (expr (ident)))
+
+===
+field
+===
+
+(m.foo)
+
+---
+
+(source
+    (expr
+        (field_access
+            object: (ident)
+            field: (ident))))
