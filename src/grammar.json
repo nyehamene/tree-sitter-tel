@@ -364,6 +364,10 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "literal_bool"
+            },
+            {
+              "type": "SYMBOL",
               "name": "ident"
             },
             {
@@ -443,6 +447,19 @@
           }
         ]
       }
+    },
+    "literal_bool": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
+        }
+      ]
     },
     "field_access": {
       "type": "SEQ",

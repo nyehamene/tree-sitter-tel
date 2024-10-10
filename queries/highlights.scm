@@ -49,6 +49,8 @@
   "(" @punctuation.bracket
   ")" @punctuation.bracket)
 
+(literal_bool) @boolean
+
 (field_access
   object: (ident) @variable
   field: (ident) @variable.member)

@@ -251,6 +251,10 @@
           "named": true
         },
         {
+          "type": "literal_bool",
+          "named": true
+        },
+        {
           "type": "literal_int",
           "named": true
         },
@@ -286,6 +290,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "literal_bool",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "namespace",
@@ -379,6 +388,10 @@
     "named": false
   },
   {
+    "type": "false",
+    "named": false
+  },
+  {
     "type": "ident",
     "named": true
   },
@@ -405,5 +418,9 @@
   {
     "type": "text",
     "named": true
+  },
+  {
+    "type": "true",
+    "named": false
   }
 ]

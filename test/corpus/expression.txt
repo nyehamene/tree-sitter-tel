@@ -71,3 +71,23 @@ string-4
 ---
 
 (source (expr (literal_str)))
+
+===
+bool-1
+===
+
+(true)
+
+---
+
+(source (expr (literal_bool)))
+
+===
+bool-2
+===
+
+(false)
+
+---
+
+(source (expr (literal_bool)))

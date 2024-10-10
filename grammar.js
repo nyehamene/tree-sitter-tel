@@ -108,7 +108,13 @@ module.exports = grammar({
     expr: ($) =>
       seq(
         PUNC().parLeft,
-        choice($.ident, $.literal_int, $.literal_str, $.field_access),
+        choice(
+          $.literal_bool,
+          $.ident,
+          $.literal_int,
+          $.literal_str,
+          $.field_access,
+        ),
         PUNC().parRight,
       ),
 
@@ -116,6 +122,8 @@ module.exports = grammar({
 
     literal_str: ($) =>
       token(choice(seq("'", /[^']*/, "'"), seq('"', /[^"]*/, '"'))),
+
+    literal_bool: ($) => choice("true", "false"),
 
     field_access: ($) =>
       seq(field("object", $.ident), ".", field("field", $.ident)),
