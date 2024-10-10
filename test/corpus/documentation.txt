@@ -2,7 +2,7 @@
 namespace
 ===
 
-// demo
+## demo
 namespace demo;
 
 ---
@@ -16,7 +16,7 @@ namespace demo;
 record
 ===
 
-/// Model
+### Model
 record Model end
 
 ---
@@ -30,7 +30,7 @@ record Model end
 template
 ===
 
-// template
+## template
 templ m Model end
 
 ---
@@ -45,9 +45,9 @@ templ m Model end
 multi line
 ===
 
-// demo line 1
-/// line 2
-// line 3
+## demo line 1
+### line 2
+## line 3
 namespace demo;
 
 ---

@@ -1,14 +1,14 @@
-/// define a component
+### define a component
 namespace my_component;
 
-/// define a record name User
+### define a record name User
 record User do
     name String;
     email String;
     phone String;
     end
 
-/// define a template for the User record
+### define a template for the User record
 templ u User do
     [div
         class="user"
@@ -27,14 +27,14 @@ templ u User do
         ]
     end
 
-/// define a record named Product
+### define a record named Product
 record Product do
     name String;
     price Float;
     owner User;
     end
 
-/// define a template for the Product record
+### define a template for the Product record
 templ p Product do
     [div
         class="product"

@@ -1,17 +1,17 @@
-/// documentations start with 2 forward slash (/) followed by the name of the target
-/// being documented. The example below is a documentation for the namesapce called demo.
-/// the name of the namespace, demo is the target of the documentation.
+### documentations starts a hash (#) followed by the name of the target
+### being documented. The example below is a documentation for the namesapce called demo.
+### the name of the namespace, demo is the target of the documentation.
 
-// demo is a namespace.
+## demo is a namespace.
 namespace demo;
 
-// Model is a record
+## Model is a record
 record Model do
-    // age is a component of the record.
+    ## age is a component of the record.
     name String;
     end
 
-/// template definitions cannot have documentation because they have no name
-/// therefore, cannot be a target for documentation.
+### template definitions cannot have documentation because they have no name
+### therefore, cannot be a target for documentation.
 templ m Model end
 

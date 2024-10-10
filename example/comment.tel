@@ -1,16 +1,16 @@
-/// comments in tel starts with 3 or more / (forward slash)
-/// and continues until the end of the line
+### comments in tel starts with 1 or more # (hash/pound symbol)
+### and continues until the end of the line
 
-/// comment before namespace
+### comment before namespace
 namespace demo;
 
-/// comment before record
+### comment before record
 record Model do
-    /// comment before component
+    ### comment before component
     name String;
-    age int; /// a trailing comment
+    age int; ### a trailing comment
     end
 
-/// comment before temple
-templ m Model do end
+### comment before temple
+templ m Model end
 

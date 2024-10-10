@@ -2,9 +2,9 @@
 empty
 ===
 
-//
+##
 
-///
+###
 
 ---
 
@@ -16,9 +16,9 @@ empty
 single line
 ===
 
-// This is a comment
+## This is a comment
 
-/// This is another comment
+### This is another comment
 
 ---
 
@@ -30,14 +30,14 @@ single line
 multi line
 ===
 
-// This is line 1
-// This is line 2
+## This is line 1
+## This is line 2
 
-/// This is line 1
-/// This is line 2
+### This is line 1
+### This is line 2
 
-// This is line 1
-/// This is line 2
+## This is line 1
+### This is line 2
 
 ---
 
@@ -50,7 +50,7 @@ multi line
 trailing
 ===
 
-namespace demo; /// This is a trailing comment
+namespace demo; ### This is a trailing comment
 
 ---
 
