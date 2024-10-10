@@ -372,6 +372,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "literal_str"
+            },
+            {
+              "type": "SYMBOL",
               "name": "field_access"
             }
           ]
@@ -394,6 +398,48 @@
           {
             "type": "PATTERN",
             "value": "[1-9][0-9_]*"
+          }
+        ]
+      }
+    },
+    "literal_str": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "'"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^']*"
+              },
+              {
+                "type": "STRING",
+                "value": "'"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\""
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^\"]*"
+              },
+              {
+                "type": "STRING",
+                "value": "\""
+              }
+            ]
           }
         ]
       }

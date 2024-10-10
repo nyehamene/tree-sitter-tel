@@ -43,6 +43,8 @@
 
 (expr (literal_int) @number)
 
+(expr (literal_str) @string)
+
 (expr
   "(" @punctuation.bracket
   ")" @punctuation.bracket)

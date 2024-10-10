@@ -108,11 +108,14 @@ module.exports = grammar({
     expr: ($) =>
       seq(
         PUNC().parLeft,
-        choice($.ident, $.literal_int, $.field_access),
+        choice($.ident, $.literal_int, $.literal_str, $.field_access),
         PUNC().parRight,
       ),
 
     literal_int: ($) => token(choice("0", /[1-9][0-9_]*/)),
+
+    literal_str: ($) =>
+      token(choice(seq("'", /[^']*/, "'"), seq('"', /[^"]*/, '"'))),
 
     field_access: ($) =>
       seq(field("object", $.ident), ".", field("field", $.ident)),

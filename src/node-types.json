@@ -253,6 +253,10 @@
         {
           "type": "literal_int",
           "named": true
+        },
+        {
+          "type": "literal_str",
+          "named": true
         }
       ]
     }
@@ -380,6 +384,10 @@
   },
   {
     "type": "literal_int",
+    "named": true
+  },
+  {
+    "type": "literal_str",
     "named": true
   },
   {

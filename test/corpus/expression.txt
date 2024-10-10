@@ -31,3 +31,43 @@ field
         (field_access
             object: (ident)
             field: (ident))))
+
+===
+string-1
+===
+
+('')
+
+---
+
+(source (expr (literal_str)))
+
+===
+string-2
+===
+
+("")
+
+---
+
+(source (expr (literal_str)))
+
+===
+string-3
+===
+
+('foo')
+
+---
+
+(source (expr (literal_str)))
+
+===
+string-4
+===
+
+("foo")
+
+---
+
+(source (expr (literal_str)))
