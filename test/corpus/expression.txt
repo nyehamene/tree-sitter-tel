@@ -9,6 +9,16 @@ ident
 (source (expr (ident)))
 
 ===
+number
+===
+
+(100)
+
+---
+
+(source (expr (literal_int)))
+
+===
 field
 ===
 

@@ -5,11 +5,10 @@ record Model do
     end
 
 templ m Model do
-    (m.age - 1)
-    (m.age + 1)
-    (m.age * m.age)
-    (100 / m.age)
-    (10 + 2 / 3 * 3 - 1)
-    ((2 8 2) / 2)
+    (- m.age 1)
+    (+ m.age 1)
+    (* m.age m.age)
+    (/ 100 m.age)
+    (- (+ 10 2) 5)
     end
 

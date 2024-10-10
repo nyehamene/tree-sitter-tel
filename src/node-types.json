@@ -249,6 +249,10 @@
         {
           "type": "ident",
           "named": true
+        },
+        {
+          "type": "literal_int",
+          "named": true
         }
       ]
     }
@@ -372,6 +376,10 @@
   },
   {
     "type": "ident",
+    "named": true
+  },
+  {
+    "type": "literal_int",
     "named": true
   },
   {

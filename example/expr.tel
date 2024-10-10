@@ -13,21 +13,23 @@ templ m Item do
     end
 
 templ m Model do
+    (0)
     (100)
+    (1_000)
     (true)
     (false)
     (ident)
     (foo.bar)
     ("str")
     ('str')
-    ("\{ident}")
-    ('\{ident}')
-    ('\{ident.member}')
-    ("\{ident.member}")
+    ("\(ident)")
+    ('\(ident)')
+    ('\(ident.member)')
+    ("\(ident.member)")
 
-    (:foreach (item, i : m.items)
-        [span (i + 1)]
-        [Item model=(m.item)]
+    (:foreach (i, item in m.items)
+        [span (+ i 2)]
+        [Item model=(item)]
         )
 
     [div (100)]

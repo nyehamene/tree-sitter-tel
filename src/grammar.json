@@ -368,6 +368,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "literal_int"
+            },
+            {
+              "type": "SYMBOL",
               "name": "field_access"
             }
           ]
@@ -377,6 +381,22 @@
           "value": ")"
         }
       ]
+    },
+    "literal_int": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "0"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[1-9][0-9_]*"
+          }
+        ]
+      }
     },
     "field_access": {
       "type": "SEQ",

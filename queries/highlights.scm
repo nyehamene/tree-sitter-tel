@@ -41,6 +41,8 @@
 
 (expr (ident)) @function.call
 
+(expr (literal_int) @number)
+
 (expr
   "(" @punctuation.bracket
   ")" @punctuation.bracket)
