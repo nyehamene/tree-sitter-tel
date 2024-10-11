@@ -70,6 +70,24 @@ record Model do
                 type: (ident)))))
 
 ===
+record-4
+===
+
+record Model do
+    items []Item;
+    end
+
+---
+
+(source
+    (def_record
+        name: (ident)
+        (components
+            (component
+                name: (ident)
+                type: (slice (ident))))))
+
+===
 template-0
 ===
 

@@ -81,10 +81,14 @@ module.exports = grammar({
 
     record_component: ($) =>
       seq(
-        field(FIELD().name, alias($.ident, $.ident)),
-        field(FIELD().type, alias($.ident, $.ident)),
+        field(FIELD().name, $.ident),
+        field(FIELD().type, $._type),
         PUNC().semiColon,
       ),
+
+    _type: ($) => choice($.ident, alias($.slice_type, $.slice)),
+
+    slice_type: ($) => seq("[]", $.ident),
 
     def_record: ($) =>
       seq(
@@ -114,6 +118,7 @@ module.exports = grammar({
           $.literal_int,
           $.literal_str,
           $.field_access,
+          $._expr_special,
         ),
         PUNC().parRight,
       ),
@@ -127,6 +132,24 @@ module.exports = grammar({
 
     field_access: ($) =>
       seq(field("object", $.ident), ".", field("field", $.ident)),
+
+    _expr_special: ($) => choice($.foreach),
+
+    foreach: ($) =>
+      seq(
+        ":",
+        "foreach",
+        PUNC().parLeft,
+        field("index", $.ident),
+        ",",
+        field("item", $.ident),
+        "in",
+        field("iter", $.field_access),
+        PUNC().parRight,
+        alias($.foreach_body, $.body),
+      ),
+
+    foreach_body: ($) => repeat1(choice($.element)),
 
     element: ($) =>
       choice(

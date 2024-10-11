@@ -91,3 +91,46 @@ bool-2
 ---
 
 (source (expr (literal_bool)))
+
+===
+foreach-1
+:error
+===
+
+(:foreach (i, item in m.items))
+
+===
+foreach-2
+:error
+===
+
+(:foreach (item in m.items))
+
+===
+foreach-3
+:error
+===
+
+(:foreach (i item in m.items))
+
+===
+foreach-4
+===
+
+(:foreach (i, item in m.items)
+    [div]
+    )
+
+---
+
+(source
+    (expr
+        (foreach
+            index: (ident)
+            item: (ident)
+            iter:
+                (field_access
+                    object: (ident)
+                    field: (ident))
+            (body
+                (element tag: (ident))))))

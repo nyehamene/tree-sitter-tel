@@ -22,6 +22,10 @@
     name: (ident) @variable.member
     type: (ident) @type)
 
+(slice (ident) @type)
+
+(slice "[]" @operator)
+
 (component
   ";" @punctuation.delimiter)
 
@@ -58,3 +62,12 @@
 (field_access
   "." @punctuation.delimiter)
 
+(foreach
+  "foreach" @keyword.repeat)
+
+(foreach
+  "in" @keyword.operator)
+
+(foreach
+  index: (ident) @variable.parameter
+  item: (ident) @variable.parameter)
