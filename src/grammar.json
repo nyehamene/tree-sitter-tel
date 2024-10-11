@@ -441,8 +441,22 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "operator"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "operator"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_logical_operator"
+              },
+              "named": true,
+              "value": "operator"
+            }
+          ]
         },
         {
           "type": "REPEAT1",
@@ -450,6 +464,37 @@
             "type": "SYMBOL",
             "name": "_basic_expr"
           }
+        }
+      ]
+    },
+    "_logical_operator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ":"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "and"
+                },
+                {
+                  "type": "STRING",
+                  "value": "or"
+                },
+                {
+                  "type": "STRING",
+                  "value": "not"
+                }
+              ]
+            }
+          ]
         }
       ]
     },

@@ -127,7 +127,13 @@ module.exports = grammar({
 
     _control_expr: ($) => choice($.foreach),
 
-    _operation: ($) => seq($.operator, repeat1($._basic_expr)),
+    _operation: ($) =>
+      seq(
+        choice($.operator, alias($._logical_operator, $.operator)),
+        repeat1($._basic_expr),
+      ),
+
+    _logical_operator: ($) => choice(seq(":", choice("and", "or", "not"))),
 
     operator: ($) => choice("+", "-", "*", "/"),
 

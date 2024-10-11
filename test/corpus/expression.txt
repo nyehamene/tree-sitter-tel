@@ -192,3 +192,43 @@ operator-4
         (ident)
         (ident)))
 
+===
+logical-1
+===
+
+(:and true true)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_bool)
+        (literal_bool)))
+
+===
+logical-2
+===
+
+(:or false true)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_bool)
+        (literal_bool)))
+
+===
+logical-3
+===
+
+(:not true)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_bool)))

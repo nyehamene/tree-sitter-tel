@@ -34,6 +34,9 @@ templ m Model do
         [Item model=(item)]
         )
 
+    (:and true true)
+    (:or false true)
+
     [div (100)]
     [div (foo)]
     [div (true)]
