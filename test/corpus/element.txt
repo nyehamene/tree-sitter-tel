@@ -21,7 +21,7 @@ attr-1
         tag: (ident)
         (attrs (attr
             key: (ident)
-            val: (text)))))
+            value: (text)))))
 
 ===
 attr-2
@@ -40,10 +40,10 @@ attr-2
         (attrs
             (attr
                 key: (ident)
-                val: (text))
+                value: (text))
             (attr
                 key: (ident)
-                val: (text)))))
+                value: (text)))))
 
 ===
 keyword
@@ -53,7 +53,7 @@ keyword
 
 ---
 
-(source (element keyword: (ident)))
+(source (element tag: (kwd_lit name: (ident))))
 
 ===
 elements
@@ -78,7 +78,7 @@ nesting-element
 (source
     (element
         tag: (ident)
-        (elements
+        (children
             (element tag: (ident)))))
 
 ===
@@ -95,10 +95,10 @@ nesting-element-2
 (source
     (element
         tag: (ident)
-        (elements
+        (children
             (element tag: (ident))
             (element tag: (ident)
-                (elements
+                (children
                     (element tag: (ident)))))))
 
 
@@ -112,5 +112,5 @@ nesting-expr
 
 (source
     (element tag: (ident)
-        (elements
-            (expr (ident)))))
+        (children
+            (list_lit value: (ident)))))

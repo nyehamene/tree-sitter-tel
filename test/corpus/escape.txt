@@ -6,7 +6,7 @@ bracket
 
 ---
 
-(source (escape_char))
+(source (escape))
 
 ===
 parens
@@ -16,4 +16,4 @@ parens
 
 ---
 
-(source (escape_char))
+(source (escape))

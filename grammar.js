@@ -1,48 +1,52 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const NOT_SPACE = /[^\s]*/;
+
 const PASCAL_CASE = /[A-Z][A-Za-z0-9]*/;
 const CAMEL_CASE = /[a-z_][A-Za-z0-9]*/;
 const SNAKE_CASE = /[a-z_][a-z_]*/;
 const KEBAB_CASE = /[a-z][a-z-]*/;
-const NOT_SPACE = /[^\s]*/;
 
-function FIELD() {
-  return {
-    name: "name",
-    type: "type",
-    target: "target",
-    tag: "tag",
-    var: "var",
-    key: "key",
-    value: "val",
-    keyword: "keyword",
-  };
-}
+const IDENT = token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE));
 
-function KEYWORD() {
-  return {
-    namespace: "namespace",
-    record: "record",
-    end: "end",
-    do: "do",
-    templ: "templ",
-  };
-}
+const ESCAPE_MARK = token("\\");
+const ESCAPE_CHAR = choice("[", "(");
+const ESCAPE = seq(ESCAPE_MARK, ESCAPE_CHAR);
 
-function PUNC() {
-  return {
-    forwardSlash: "/",
-    semiColon: ";",
-    bracketLeft: "[",
-    bracketRight: "]",
-    eq: "=",
-    parLeft: "(",
-    parRight: ")",
-    backSlash: "\\",
-    colon: ":",
-  };
-}
+const COMMENT = token(repeat1(seq(/#+/, /[^\n]*/, optional("\n"))));
+
+const BOOL = choice("true", "false");
+const NUMBER = token(choice("0", /[1-9][0-9_]*/));
+const STRING = token(choice(seq("'", /[^']*/, "'"), seq('"', /[^"]*/, '"')));
+const SYM = choice("+", "-", "*", "/");
+
+// XXX: replace with basic expressions, e.g. str, int, bool, vector
+const ATTR_VAL = token(/[^\s\]]*/);
+
+const BLOCK = field("marker", "do");
+
+const NS = ($) => seq("namespace", field("name", $.ident), ";");
+
+const KWD = ($) => choice(seq(field("marker", ":"), field("name", $.ident)));
+
+// XXX: replace escape with text
+const FORM = ($) => choice($.element, $._expr, $.escape);
+
+const DEF = ($) => choice($.def_record, $.def_templ, $._form);
+
+const ATTRS = ($) => prec.right(repeat1($.attr));
+
+const TYPE = ($) => choice($.ident, $.slice_lit);
+
+const SLICE = ($) => seq(field("marker", "[]"), field("name", $.ident));
+
+const FIELD = ($) => seq(field("name", $.ident), field("type", $._type), ";");
+
+const FIELDS = ($) => repeat1($.field);
+
+const FIELD_ACCESS = ($) =>
+  seq(field("object", $.ident), ".", field("field", $.ident));
 
 module.exports = grammar({
   name: "tel",
@@ -52,146 +56,100 @@ module.exports = grammar({
   word: ($) => $.ident,
 
   rules: {
-    source: ($) =>
-      optional(seq(optional($.namespace), repeat($._toplevel_stmt))),
+    source: ($) => optional(seq(optional($.namespace), repeat($._def))),
 
-    ident: ($) =>
-      token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE)),
+    namespace: ($) => NS($),
 
-    comment: ($) => token(repeat1(seq(/#+/, /[^\n]*/, optional("\n")))),
+    ident: ($) => IDENT,
 
-    _toplevel_stmt: ($) => choice($.def_record, $.def_templ, $._stmt),
+    comment: ($) => COMMENT,
 
-    _stmt: ($) => choice($.element, $.expr, $.escape_char),
+    sym: ($) => SYM,
 
-    escape_char: ($) =>
+    int_lit: ($) => NUMBER,
+
+    str_lit: ($) => STRING,
+
+    bool_lit: ($) => BOOL,
+
+    kwd_lit: ($) => KWD($),
+
+    // XXX: remove escape after implementing text
+    escape: ($) => ESCAPE,
+
+    // XXX: remove _form
+    _def: ($) => DEF($),
+
+    _form: ($) => FORM($),
+
+    _type: ($) => TYPE($),
+
+    attrs: ($) => ATTRS($),
+
+    slice_lit: ($) => SLICE($),
+
+    field_access: ($) => FIELD_ACCESS($),
+
+    fields: ($) => FIELDS($),
+
+    field: ($) => FIELD($),
+
+    _expr: ($) =>
       choice(
-        token(seq(PUNC().backSlash, PUNC().bracketLeft)),
-        token(seq(PUNC().backSlash, PUNC().parLeft)),
-      ),
-
-    record_components: ($) => repeat1(alias($.record_component, $.component)),
-
-    namespace: ($) =>
-      seq(
-        KEYWORD().namespace,
-        field(FIELD().name, alias($.ident, $.ident)),
-        PUNC().semiColon,
-      ),
-
-    record_component: ($) =>
-      seq(
-        field(FIELD().name, $.ident),
-        field(FIELD().type, $._type),
-        PUNC().semiColon,
-      ),
-
-    _type: ($) => choice($.ident, alias($.slice_type, $.slice)),
-
-    slice_type: ($) => seq("[]", $.ident),
-
-    def_record: ($) =>
-      seq(
-        KEYWORD().record,
-        field(FIELD().name, $.ident /* alias($.ident, $.ident) */),
-        optional(seq(KEYWORD().do, alias($.record_components, $.components))),
-        KEYWORD().end,
-      ),
-
-    def_templ: ($) =>
-      seq(
-        KEYWORD().templ,
-        field(FIELD().var, alias($.ident, $.ident)),
-        field(FIELD().type, alias($.ident, $.ident)),
-        optional(seq(KEYWORD().do, alias($.templ_body, $.body))),
-        KEYWORD().end,
-      ),
-
-    templ_body: ($) => repeat1($._stmt),
-
-    expr: ($) =>
-      seq(
-        PUNC().parLeft,
-        choice($._basic_expr, $._control_expr, $._operation),
-        PUNC().parRight,
-      ),
-
-    _basic_expr: ($) =>
-      choice(
-        $.literal_bool,
+        $.sym,
         $.ident,
-        $.literal_int,
-        $.literal_str,
+        $.bool_lit,
+        $.int_lit,
+        $.str_lit,
         $.field_access,
+        $.list_lit,
+        $.kwd_lit,
       ),
 
-    _control_expr: ($) => choice($.foreach),
-
-    _operation: ($) =>
+    list_lit: ($) =>
       seq(
-        choice($.operator, alias($._logical_operator, $.operator)),
-        repeat1($._basic_expr),
+        field("open", "("),
+        repeat1(field("value", $._form)),
+        field("close", ")"),
       ),
-
-    _logical_operator: ($) => choice(seq(":", choice("and", "or", "not"))),
-
-    operator: ($) => choice("+", "-", "*", "/"),
-
-    literal_int: ($) => token(choice("0", /[1-9][0-9_]*/)),
-
-    literal_str: ($) =>
-      token(choice(seq("'", /[^']*/, "'"), seq('"', /[^"]*/, '"'))),
-
-    literal_bool: ($) => choice("true", "false"),
-
-    field_access: ($) =>
-      seq(field("object", $.ident), ".", field("field", $.ident)),
-
-    _expr_special: ($) => choice($.foreach),
-
-    foreach: ($) =>
-      seq(
-        ":",
-        "foreach",
-        PUNC().parLeft,
-        field("index", $.ident),
-        ",",
-        field("item", $.ident),
-        "in",
-        field("iter", $.field_access),
-        PUNC().parRight,
-        alias($.foreach_body, $.body),
-      ),
-
-    foreach_body: ($) => repeat1(choice($.element)),
 
     element: ($) =>
-      choice(
-        seq(
-          PUNC().bracketLeft,
-          field(FIELD().tag, $.ident),
-          optional($.attrs),
-          optional($.elements),
-          PUNC().bracketRight,
-        ),
-        seq(
-          token(seq(PUNC().bracketLeft, PUNC().colon)),
-          field(FIELD().keyword, $.ident),
-          optional($.attrs),
-          optional($.elements),
-          PUNC().bracketRight,
-        ),
+      seq(
+        field("open", "["),
+        field("tag", choice($.ident, $.kwd_lit)),
+        optional($.attrs),
+        optional(alias($._elements, $.children)),
+        field("close", "]"),
       ),
 
-    elements: ($) => repeat1($._stmt),
-
-    attrs: ($) => repeat1($.attr),
+    _elements: ($) => repeat1($._form),
 
     attr: ($) =>
       seq(
-        field(FIELD().key, $.ident),
-        token.immediate(PUNC().eq),
-        field(FIELD().value, alias(token(/[^\s\]]*/), $.text)),
+        field("key", $.ident),
+        token.immediate("="),
+        field("value", alias(ATTR_VAL, $.text)),
       ),
+
+    def_record: ($) =>
+      seq(
+        field("open", "record"),
+        field("name", $.ident),
+        optional(field("body", $._record_body)),
+        field("close", "end"),
+      ),
+
+    _record_body: ($) => seq(BLOCK, $.fields),
+
+    def_templ: ($) =>
+      seq(
+        field("open", "templ"),
+        field("var", $.ident),
+        field("type", $.ident),
+        optional(alias($._templ_body, $.body)),
+        field("close", "end"),
+      ),
+
+    _templ_body: ($) => seq(BLOCK, repeat1($._form)),
   },
 });

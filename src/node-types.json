@@ -13,7 +13,7 @@
           }
         ]
       },
-      "val": {
+      "value": {
         "multiple": false,
         "required": true,
         "types": [
@@ -43,30 +43,159 @@
   {
     "type": "body",
     "named": true,
-    "fields": {},
+    "fields": {
+      "marker": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "do",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "bool_lit",
+          "named": true
+        },
+        {
           "type": "element",
           "named": true
         },
         {
-          "type": "escape_char",
+          "type": "escape",
           "named": true
         },
         {
-          "type": "expr",
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "ident",
+          "named": true
+        },
+        {
+          "type": "int_lit",
+          "named": true
+        },
+        {
+          "type": "kwd_lit",
+          "named": true
+        },
+        {
+          "type": "list_lit",
+          "named": true
+        },
+        {
+          "type": "str_lit",
+          "named": true
+        },
+        {
+          "type": "sym",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "component",
+    "type": "bool_lit",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "children",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "bool_lit",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "escape",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "ident",
+          "named": true
+        },
+        {
+          "type": "int_lit",
+          "named": true
+        },
+        {
+          "type": "kwd_lit",
+          "named": true
+        },
+        {
+          "type": "list_lit",
+          "named": true
+        },
+        {
+          "type": "str_lit",
+          "named": true
+        },
+        {
+          "type": "sym",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_record",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "do",
+            "named": false
+          },
+          {
+            "type": "fields",
+            "named": true
+          }
+        ]
+      },
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end",
+            "named": false
+          }
+        ]
+      },
+      "marker": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "do",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -77,67 +206,42 @@
           }
         ]
       },
-      "type": {
+      "open": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "ident",
-            "named": true
-          },
-          {
-            "type": "slice",
-            "named": true
+            "type": "record",
+            "named": false
           }
         ]
       }
-    }
-  },
-  {
-    "type": "components",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "component",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "def_record",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ident",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "components",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "def_templ",
     "named": true,
     "fields": {
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end",
+            "named": false
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "templ",
+            "named": false
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": true,
@@ -174,22 +278,36 @@
     "type": "element",
     "named": true,
     "fields": {
-      "keyword": {
+      "close": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "ident",
-            "named": true
+            "type": "]",
+            "named": false
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "[",
+            "named": false
           }
         ]
       },
       "tag": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "ident",
+            "named": true
+          },
+          {
+            "type": "kwd_lit",
             "named": true
           }
         ]
@@ -204,77 +322,45 @@
           "named": true
         },
         {
-          "type": "elements",
+          "type": "children",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "elements",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "element",
-          "named": true
-        },
-        {
-          "type": "escape_char",
-          "named": true
-        },
-        {
-          "type": "expr",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "escape_char",
+    "type": "escape",
     "named": true,
     "fields": {}
   },
   {
-    "type": "expr",
+    "type": "field",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "foreach",
-          "named": true
-        },
-        {
-          "type": "ident",
-          "named": true
-        },
-        {
-          "type": "literal_bool",
-          "named": true
-        },
-        {
-          "type": "literal_int",
-          "named": true
-        },
-        {
-          "type": "literal_str",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        }
-      ]
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          },
+          {
+            "type": "slice_lit",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -304,55 +390,117 @@
     }
   },
   {
-    "type": "foreach",
+    "type": "fields",
     "named": true,
-    "fields": {
-      "index": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ident",
-            "named": true
-          }
-        ]
-      },
-      "item": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ident",
-            "named": true
-          }
-        ]
-      },
-      "iter": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "field_access",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "body",
+          "type": "field",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "literal_bool",
+    "type": "kwd_lit",
     "named": true,
-    "fields": {}
+    "fields": {
+      "marker": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "list_lit",
+    "named": true,
+    "fields": {
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ")",
+            "named": false
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "bool_lit",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "escape",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "ident",
+            "named": true
+          },
+          {
+            "type": "int_lit",
+            "named": true
+          },
+          {
+            "type": "kwd_lit",
+            "named": true
+          },
+          {
+            "type": "list_lit",
+            "named": true
+          },
+          {
+            "type": "str_lit",
+            "named": true
+          },
+          {
+            "type": "sym",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "namespace",
@@ -371,23 +519,29 @@
     }
   },
   {
-    "type": "operator",
+    "type": "slice_lit",
     "named": true,
-    "fields": {}
-  },
-  {
-    "type": "slice",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "ident",
-          "named": true
-        }
-      ]
+    "fields": {
+      "marker": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "[]",
+            "named": false
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -398,6 +552,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "bool_lit",
+          "named": true
+        },
         {
           "type": "def_record",
           "named": true
@@ -411,19 +569,48 @@
           "named": true
         },
         {
-          "type": "escape_char",
+          "type": "escape",
           "named": true
         },
         {
-          "type": "expr",
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "ident",
+          "named": true
+        },
+        {
+          "type": "int_lit",
+          "named": true
+        },
+        {
+          "type": "kwd_lit",
+          "named": true
+        },
+        {
+          "type": "list_lit",
           "named": true
         },
         {
           "type": "namespace",
           "named": true
+        },
+        {
+          "type": "str_lit",
+          "named": true
+        },
+        {
+          "type": "sym",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "sym",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "(",
@@ -439,10 +626,6 @@
   },
   {
     "type": "+",
-    "named": false
-  },
-  {
-    "type": ",",
     "named": false
   },
   {
@@ -478,11 +661,11 @@
     "named": false
   },
   {
-    "type": "]",
+    "type": "\\",
     "named": false
   },
   {
-    "type": "and",
+    "type": "]",
     "named": false
   },
   {
@@ -502,23 +685,11 @@
     "named": false
   },
   {
-    "type": "foreach",
-    "named": false
-  },
-  {
     "type": "ident",
     "named": true
   },
   {
-    "type": "in",
-    "named": false
-  },
-  {
-    "type": "literal_int",
-    "named": true
-  },
-  {
-    "type": "literal_str",
+    "type": "int_lit",
     "named": true
   },
   {
@@ -526,16 +697,12 @@
     "named": false
   },
   {
-    "type": "not",
-    "named": false
-  },
-  {
-    "type": "or",
-    "named": false
-  },
-  {
     "type": "record",
     "named": false
+  },
+  {
+    "type": "str_lit",
+    "named": true
   },
   {
     "type": "templ",

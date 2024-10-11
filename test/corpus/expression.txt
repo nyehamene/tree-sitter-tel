@@ -6,7 +6,7 @@ ident
 
 ---
 
-(source (expr (ident)))
+(source (list_lit (ident)))
 
 ===
 number
@@ -16,7 +16,7 @@ number
 
 ---
 
-(source (expr (literal_int)))
+(source (list_lit (int_lit)))
 
 ===
 field
@@ -27,8 +27,8 @@ field
 ---
 
 (source
-    (expr
-        (field_access
+    (list_lit
+        value: (field_access
             object: (ident)
             field: (ident))))
 
@@ -40,7 +40,7 @@ string-1
 
 ---
 
-(source (expr (literal_str)))
+(source (list_lit (str_lit)))
 
 ===
 string-2
@@ -50,7 +50,7 @@ string-2
 
 ---
 
-(source (expr (literal_str)))
+(source (list_lit (str_lit)))
 
 ===
 string-3
@@ -60,7 +60,7 @@ string-3
 
 ---
 
-(source (expr (literal_str)))
+(source (list_lit (str_lit)))
 
 ===
 string-4
@@ -70,7 +70,7 @@ string-4
 
 ---
 
-(source (expr (literal_str)))
+(source (list_lit (str_lit)))
 
 ===
 bool-1
@@ -80,7 +80,7 @@ bool-1
 
 ---
 
-(source (expr (literal_bool)))
+(source (list_lit (bool_lit)))
 
 ===
 bool-2
@@ -90,50 +90,44 @@ bool-2
 
 ---
 
-(source (expr (literal_bool)))
+(source (list_lit (bool_lit)))
 
 ===
-foreach-1
+each-1
 :error
 ===
 
-(:foreach (i, item in m.items))
+(:each (in m.items i item))
 
 ===
-foreach-2
+each-2
 :error
 ===
 
-(:foreach (item in m.items))
+(:each (in m.items item))
 
 ===
-foreach-3
-:error
+each-3
 ===
 
-(:foreach (i item in m.items))
-
-===
-foreach-4
-===
-
-(:foreach (i, item in m.items)
-    [div]
+(:each (in m.items i item)
+    [div (i) (item)]
     )
 
 ---
 
 (source
-    (expr
-        (foreach
-            index: (ident)
-            item: (ident)
-            iter:
-                (field_access
-                    object: (ident)
-                    field: (ident))
-            (body
-                (element tag: (ident))))))
+    (list_lit
+        value: (kwd_lit name: (ident))
+        value: (list_lit
+                    value: (ident)
+                    value: (field_access object: (ident) field: (ident))
+                    value: (ident)
+                    value: (ident))
+        value: (element tag: (ident)
+            (children
+                (list_lit value: (ident))
+                (list_lit value: (ident))))))
 
 ===
 operator-1
@@ -144,11 +138,11 @@ operator-1
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_int)
-        (ident)
-        (ident)))
+    (list_lit
+        value: (sym)
+        value: (int_lit)
+        value: (ident)
+        value: (ident)))
 
 ===
 operator-2
@@ -159,10 +153,10 @@ operator-2
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_int)
-        (ident)))
+    (list_lit
+        value: (sym)
+        value: (int_lit)
+        value: (ident)))
 
 ===
 operator-3
@@ -173,10 +167,10 @@ operator-3
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_int)
-        (literal_int)))
+    (list_lit
+        value: (sym)
+        value: (int_lit)
+        value: (int_lit)))
 
 ===
 operator-4
@@ -187,10 +181,10 @@ operator-4
 ---
 
 (source
-    (expr
-        (operator)
-        (ident)
-        (ident)))
+    (list_lit
+        value: (sym)
+        value: (ident)
+        value: (ident)))
 
 ===
 logical-1
@@ -201,10 +195,10 @@ logical-1
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_bool)
-        (literal_bool)))
+    (list_lit
+        value: (kwd_lit name: (ident))
+        value: (bool_lit)
+        value: (bool_lit)))
 
 ===
 logical-2
@@ -215,10 +209,10 @@ logical-2
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_bool)
-        (literal_bool)))
+    (list_lit
+        value: (kwd_lit name: (ident))
+        value: (bool_lit)
+        value: (bool_lit)))
 
 ===
 logical-3
@@ -229,6 +223,18 @@ logical-3
 ---
 
 (source
-    (expr
-        (operator)
-        (literal_bool)))
+    (list_lit
+        value: (kwd_lit name: (ident))
+        value: (bool_lit)))
+
+===
+keyword
+===
+
+(:and)
+
+---
+
+(source
+    (list_lit
+        value: (kwd_lit name: (ident))))

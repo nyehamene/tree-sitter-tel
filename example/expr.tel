@@ -29,7 +29,7 @@ templ m Model do
     ('\(ident.member)')
     ("\(ident.member)")
 
-    (:foreach (i, item in m.items)
+    (:each (in m.items i items)
         [span (+ i 2)]
         [Item model=(item)]
         )

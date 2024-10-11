@@ -42,10 +42,10 @@ record Model do
 (source
     (def_record
         name: (ident)
-        (components
-            (component
-                name: (ident)
-                type: (ident)))))
+        body: (fields
+                (field
+                    name: (ident)
+                    type: (ident)))))
 
 ===
 record-3
@@ -61,11 +61,11 @@ record Model do
 (source
     (def_record
         name: (ident)
-        (components
-            (component
+        body: (fields
+            (field
                 name: (ident)
                 type: (ident))
-            (component
+            (field
                 name: (ident)
                 type: (ident)))))
 
@@ -82,10 +82,10 @@ record Model do
 (source
     (def_record
         name: (ident)
-        (components
-            (component
+        body: (fields
+            (field
                 name: (ident)
-                type: (slice (ident))))))
+                type: (slice_lit name: (ident))))))
 
 ===
 template-0
@@ -138,9 +138,9 @@ templ m Model do
     (def_templ
         var: (ident)
         type: (ident)
-        (body
+       (body
             (element tag: (ident)
-                (elements
+                (children
                     (element tag: (ident)))))))
 
 ===

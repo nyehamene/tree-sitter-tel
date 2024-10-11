@@ -18,44 +18,44 @@
   var: (ident) @variable.parameter
   type: (ident) @type)
 
-(component
+(field
     name: (ident) @variable.member
     type: (ident) @type)
 
-(slice (ident) @type)
-
-(slice "[]" @operator)
-
-(component
+(field
   ";" @punctuation.delimiter)
+
+(slice_lit (ident) @type)
+
+(slice_lit "[]" @operator)
 
 (element
   tag: (ident) @tag)
 
 (element
-  "[" @tag.delimiter
-  "]" @tag.delimiter)
+  open: "[" @tag.delimiter
+  close: "]" @tag.delimiter)
 
 (attr
   key: (ident) @tag.attribute @property
-  val: (text) @string)
+  value: (text) @string)
 
 (attr
   "=" @punctuation.delimiter)
 
-(expr (ident)) @function.call
+(list_lit value: (ident)) @function.call
 
-(expr (literal_int) @number)
+(int_lit) @number
 
-(expr (literal_str) @string)
+(str_lit) @string
 
-(expr
-  "(" @punctuation.bracket
-  ")" @punctuation.bracket)
+(bool_lit) @boolean
 
-(literal_bool) @boolean
+(list_lit
+  open: "(" @punctuation.bracket
+  close: ")" @punctuation.bracket)
 
-(operator) @operator
+(sym) @operator
 
 (field_access
   object: (ident) @variable
@@ -64,12 +64,24 @@
 (field_access
   "." @punctuation.delimiter)
 
-(foreach
-  "foreach" @keyword.repeat)
+(kwd_lit
+  name: (ident) @name @keyword.repeat
+  (#eq? @name "each"))
 
-(foreach
-  "in" @keyword.operator)
+(kwd_lit
+  name: (ident) @name @keyword
+  (#any-of? @name "and" "or" "not"))
 
-(foreach
-  index: (ident) @variable.parameter
-  item: (ident) @variable.parameter)
+(list_lit
+  .
+  value: (kwd_lit name: (ident) @name
+                  (#eq? @name "each"))
+  .
+  value: (list_lit
+           .
+           value: (ident) @op @keyword
+           (#eq? @op "in")
+           .
+           [ (field_access) (ident)]
+           .
+           (ident)+ @variable.parameter))
