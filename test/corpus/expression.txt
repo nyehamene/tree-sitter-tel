@@ -134,3 +134,61 @@ foreach-4
                     field: (ident))
             (body
                 (element tag: (ident))))))
+
+===
+operator-1
+===
+
+(+ 1 m b)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_int)
+        (ident)
+        (ident)))
+
+===
+operator-2
+===
+
+(- 1 m)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_int)
+        (ident)))
+
+===
+operator-3
+===
+
+(* 1 2)
+
+---
+
+(source
+    (expr
+        (operator)
+        (literal_int)
+        (literal_int)))
+
+===
+operator-4
+===
+
+(/ a b)
+
+---
+
+(source
+    (expr
+        (operator)
+        (ident)
+        (ident)))
+

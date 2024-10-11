@@ -112,16 +112,24 @@ module.exports = grammar({
     expr: ($) =>
       seq(
         PUNC().parLeft,
-        choice(
-          $.literal_bool,
-          $.ident,
-          $.literal_int,
-          $.literal_str,
-          $.field_access,
-          $._expr_special,
-        ),
+        choice($._basic_expr, $._control_expr, $._operation),
         PUNC().parRight,
       ),
+
+    _basic_expr: ($) =>
+      choice(
+        $.literal_bool,
+        $.ident,
+        $.literal_int,
+        $.literal_str,
+        $.field_access,
+      ),
+
+    _control_expr: ($) => choice($.foreach),
+
+    _operation: ($) => seq($.operator, repeat1($._basic_expr)),
+
+    operator: ($) => choice("+", "-", "*", "/"),
 
     literal_int: ($) => token(choice("0", /[1-9][0-9_]*/)),
 

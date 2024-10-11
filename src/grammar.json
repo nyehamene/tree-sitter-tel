@@ -385,33 +385,92 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "literal_bool"
+              "name": "_basic_expr"
             },
             {
               "type": "SYMBOL",
-              "name": "ident"
+              "name": "_control_expr"
             },
             {
               "type": "SYMBOL",
-              "name": "literal_int"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "literal_str"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "field_access"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_expr_special"
+              "name": "_operation"
             }
           ]
         },
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "_basic_expr": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "literal_bool"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ident"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "literal_int"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "literal_str"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "field_access"
+        }
+      ]
+    },
+    "_control_expr": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "foreach"
+        }
+      ]
+    },
+    "_operation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "operator"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_basic_expr"
+          }
+        }
+      ]
+    },
+    "operator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "STRING",
+          "value": "-"
+        },
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
         }
       ]
     },

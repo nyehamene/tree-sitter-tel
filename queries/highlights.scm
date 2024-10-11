@@ -55,6 +55,8 @@
 
 (literal_bool) @boolean
 
+(operator) @operator
+
 (field_access
   object: (ident) @variable
   field: (ident) @variable.member)
