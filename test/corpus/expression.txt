@@ -238,3 +238,21 @@ keyword
 (source
     (list_lit
         value: (kwd_lit name: (ident))))
+
+===
+nested expr
+===
+
+(:and true (+ 1 3))
+
+---
+
+(source
+    (list_lit
+        value: (kwd_lit name: (ident))
+        value: (bool_lit)
+        value:
+            (list_lit
+                value: (sym)
+                value: (int_lit)
+                value: (int_lit))))
