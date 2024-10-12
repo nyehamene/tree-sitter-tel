@@ -256,3 +256,49 @@ nested expr
                 value: (sym)
                 value: (int_lit)
                 value: (int_lit))))
+
+===
+string-template-1
+:skip
+===
+
+("\(true)")
+
+---
+
+(source
+    (list_lit value: (str_lit templ: (list_lit value: (bool_lit)))))
+
+===
+string-template-2
+:skip
+===
+
+("foo\(100)")
+
+---
+
+(source
+    (list_lit value: (str_lit templ: (list_lit value: (int_lit)))))
+
+===
+escape-1
+:skip
+===
+
+\()
+
+---
+
+(source (text))
+
+===
+escape-2
+:skip
+===
+
+\[]
+
+---
+
+(source (text))

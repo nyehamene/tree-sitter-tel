@@ -1,6 +1,10 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+function regex(...patts) {
+  return RegExp(patts.join(""));
+}
+
 const NOT_SPACE = /[^\s]*/;
 
 const PASCAL_CASE = /[A-Z][A-Za-z0-9]*/;
@@ -18,7 +22,12 @@ const COMMENT = token(repeat1(seq(/#+/, /[^\n]*/, optional("\n"))));
 
 const BOOL = choice("true", "false");
 const NUMBER = token(choice("0", /[1-9][0-9_]*/));
-const STRING = token(choice(seq("'", /[^']*/, "'"), seq('"', /[^"]*/, '"')));
+
+const STRING_WITH_MARKER = (marker) =>
+  seq(marker, regex("[^", marker, "]*"), marker);
+
+const STRING = token(choice(STRING_WITH_MARKER('"'), STRING_WITH_MARKER("'")));
+
 const SYM = choice("+", "-", "*", "/");
 
 // XXX: replace with basic expressions, e.g. str, int, bool, vector
