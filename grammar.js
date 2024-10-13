@@ -1,6 +1,7 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+/** @param {string[]} patts */
 function regex(...patts) {
   return RegExp(patts.join(""));
 }
@@ -28,36 +29,50 @@ const ATTR_VAL = token(/[^\s\]]*/);
 
 const BLOCK = field("marker", "do");
 
+/** @param {any} $ */
 const NS = ($) => seq("namespace", field("name", $.ident), ";");
 
+/** @param {any} $ */
 const KWD = ($) => choice(seq(field("marker", ":"), field("name", $.ident)));
 
 // XXX: replace escape with text
+/** @param {any} $ */
 const FORM = ($) => choice($.element, $._expr, $.escape);
 
+/** @param {any} $ */
 const DEF = ($) => choice($.def_record, $.def_templ, $._form);
 
+/** @param {any} $ */
 const ATTRS = ($) => prec.right(repeat1($.attr));
 
+/** @param {any} $ */
 const TYPE = ($) => choice($.ident, $.slice_lit);
 
+/** @param {any} $ */
 const SLICE = ($) => seq(field("marker", "[]"), field("name", $.ident));
 
+/** @param {any} $ */
 const FIELD = ($) => seq(field("name", $.ident), field("type", $._type), ";");
 
+/** @param {any} $ */
 const FIELDS = ($) => repeat1($.field);
 
+/** @param {any} $ */
 const FIELD_ACCESS = ($) =>
   seq(field("object", $.ident), ".", field("field", $.ident));
 
+// /** @param {string} marker @param {any} $ */
 // const templ_with_marker = ($, marker) =>
 //   seq(marker, repeat(seq(optional(str_text(marker)), str_templ($))), marker);
 
+// /** @param {any} $ */
 // const str_templ = ($) => seq("\\", field("templ", $.list_lit));
 
+/** @param {string} marker */
 const str_with_marker = (marker) =>
   seq(marker, repeat(str_text(marker)), marker);
 
+/** @param {string} marker */
 const str_text = (marker) =>
   seq(optional(regex("[^", marker, "\\\\]*")), optional(STR_ESCAPE));
 
@@ -65,9 +80,11 @@ const STR_ESCAPE = seq("\\", /[^\(]/);
 
 const STR_PLAIN = token(choice(str_with_marker('"'), str_with_marker("'")));
 
+// /** @param {any} $ */
 // const STR_TEMPLATE = ($) =>
 //   choice(templ_with_marker($, '"'), templ_with_marker($, "'"));
 
+// /** @param {any} $ */
 const STR = () => choice(STR_PLAIN);
 
 module.exports = grammar({
@@ -82,22 +99,22 @@ module.exports = grammar({
 
     namespace: ($) => NS($),
 
-    ident: ($) => IDENT,
+    ident: () => IDENT,
 
-    comment: ($) => COMMENT,
+    comment: () => COMMENT,
 
-    sym: ($) => SYM,
+    sym: (_) => SYM,
 
-    int_lit: ($) => NUMBER,
+    int_lit: () => NUMBER,
 
     str_lit: () => STR(),
 
-    bool_lit: ($) => BOOL,
+    bool_lit: () => BOOL,
 
     kwd_lit: ($) => KWD($),
 
     // XXX: remove escape after implementing text
-    escape: ($) => ESCAPE,
+    escape: () => ESCAPE,
 
     // XXX: remove _form
     _def: ($) => DEF($),
