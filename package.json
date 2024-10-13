@@ -25,6 +25,7 @@
     "node-gyp-build": "^4.8.0"
   },
   "devDependencies": {
+    "@types/node": "^22.7.5",
     "prebuildify": "^6.0.0",
     "tree-sitter-cli": "^0.22.6"
   },
@@ -43,11 +44,5 @@
     "build-wasm": "tree-sitter build --wasm",
     "test": "tree-sitter test",
     "parse": "tree-sitter parse"
-  },
-  "tree-sitter": [
-    {
-      "scope": "source.tel",
-      "injection-regex": "^tel$"
-    }
-  ]
+  }
 }
