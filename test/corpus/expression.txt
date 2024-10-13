@@ -73,6 +73,47 @@ string-4
 (source (list_lit (str_lit)))
 
 ===
+string-5
+===
+
+("\a")
+
+---
+
+(source (list_lit value: (str_lit)))
+
+===
+string-6
+:error
+===
+
+("\[")
+
+===
+string-7
+===
+
+("\bfoo")
+
+---
+
+(source
+    (list_lit value:
+        (str_lit)))
+
+===
+string-8
+===
+
+("foo\[")
+
+---
+
+(source
+    (list_lit value:
+        (str_lit)))
+
+===
 bool-1
 ===
 

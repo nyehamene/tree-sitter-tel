@@ -5,8 +5,6 @@ function regex(...patts) {
   return RegExp(patts.join(""));
 }
 
-const NOT_SPACE = /[^\s]*/;
-
 const PASCAL_CASE = /[A-Z][A-Za-z0-9]*/;
 const CAMEL_CASE = /[a-z_][A-Za-z0-9]*/;
 const SNAKE_CASE = /[a-z_][a-z_]*/;
@@ -22,11 +20,6 @@ const COMMENT = token(repeat1(seq(/#+/, /[^\n]*/, optional("\n"))));
 
 const BOOL = choice("true", "false");
 const NUMBER = token(choice("0", /[1-9][0-9_]*/));
-
-const STRING_WITH_MARKER = (marker) =>
-  seq(marker, regex("[^", marker, "]*"), marker);
-
-const STRING = token(choice(STRING_WITH_MARKER('"'), STRING_WITH_MARKER("'")));
 
 const SYM = choice("+", "-", "*", "/");
 
@@ -57,12 +50,30 @@ const FIELDS = ($) => repeat1($.field);
 const FIELD_ACCESS = ($) =>
   seq(field("object", $.ident), ".", field("field", $.ident));
 
+// const templ_with_marker = ($, marker) =>
+//   seq(marker, repeat(seq(optional(str_text(marker)), str_templ($))), marker);
+
+// const str_templ = ($) => seq("\\", field("templ", $.list_lit));
+
+const str_with_marker = (marker) =>
+  seq(marker, repeat(str_text(marker)), marker);
+
+const str_text = (marker) =>
+  seq(optional(regex("[^", marker, "\\\\]*")), optional(STR_ESCAPE));
+
+const STR_ESCAPE = seq("\\", /[^\(]/);
+
+const STR_PLAIN = token(choice(str_with_marker('"'), str_with_marker("'")));
+
+// const STR_TEMPLATE = ($) =>
+//   choice(templ_with_marker($, '"'), templ_with_marker($, "'"));
+
+const STR = () => choice(STR_PLAIN);
+
 module.exports = grammar({
   name: "tel",
 
   extras: ($) => [$.comment, /\s/],
-
-  externals: ($) => [$.str_lit],
 
   word: ($) => $.ident,
 
@@ -79,7 +90,7 @@ module.exports = grammar({
 
     int_lit: ($) => NUMBER,
 
-    // str_lit: ($) => STR($),
+    str_lit: () => STR(),
 
     bool_lit: ($) => BOOL,
 
