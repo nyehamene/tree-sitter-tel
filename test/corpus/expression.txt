@@ -387,24 +387,3 @@ string-template-2
         (str_lit templ:
             (int_lit))))
 
-===
-escape-1
-:skip
-===
-
-\()
-
----
-
-(source (text))
-
-===
-escape-2
-:skip
-===
-
-\[]
-
----
-
-(source (text))

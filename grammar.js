@@ -13,10 +13,6 @@ const KEBAB_CASE = /[a-z][a-z-]*/;
 
 const IDENT = token(choice(PASCAL_CASE, CAMEL_CASE, SNAKE_CASE, KEBAB_CASE));
 
-const ESCAPE_MARK = token("\\");
-const ESCAPE_CHAR = choice("[", "(");
-const ESCAPE = seq(ESCAPE_MARK, ESCAPE_CHAR);
-
 const COMMENT = token(repeat1(seq(/#+/, /[^\n]*/, optional("\n"))));
 
 const BOOL = choice("true", "false");
@@ -24,10 +20,11 @@ const NUMBER = token(choice("0", /[1-9][0-9_]*/));
 
 const SYM = choice("+", "-", "*", "/");
 
-// XXX: replace with basic expressions, e.g. str, int, bool, vector
-const ATTR_VAL = token(/[^\s\]]*/);
-
 const BLOCK = field("marker", "do");
+
+const TEXT = token(/[^\]\n\s]/);
+
+const ESCAPE_FORM = token(choice("\\(", "\\[", "\\]"));
 
 /** @param {any} $ */
 const NS = ($) => seq("namespace", field("name", $.ident), ";");
@@ -35,15 +32,15 @@ const NS = ($) => seq("namespace", field("name", $.ident), ";");
 /** @param {any} $ */
 const KWD = ($) => choice(seq(field("marker", ":"), field("name", $.ident)));
 
-// XXX: replace escape with text
-/** @param {any} $ */
-const FORM = ($) => choice($.element, $._expr, $.escape);
+// TODO: organise precedence levels
 
+/** @param {any} $ */
+const FORM = ($) => choice(prec(1, $.element), prec(1, $._expr));
+
+// TODO: remove _form
+//
 /** @param {any} $ */
 const DEF = ($) => choice($.def_record, $.def_templ, $._form);
-
-/** @param {any} $ */
-const ATTRS = ($) => prec.right(repeat1($.attr));
 
 /** @param {any} $ */
 const TYPE = ($) => choice($.ident, $.slice_lit);
@@ -93,8 +90,6 @@ module.exports = grammar({
 
   extras: ($) => [$.comment, /\s/],
 
-  // externals: ($) => [$.escape_char, $._str_text],
-
   word: ($) => $.ident,
 
   rules: {
@@ -118,17 +113,11 @@ module.exports = grammar({
 
     kwd_lit: ($) => KWD($),
 
-    // XXX: remove escape after implementing text
-    escape: () => ESCAPE,
-
-    // XXX: remove _form
     _def: ($) => DEF($),
 
     _form: ($) => FORM($),
 
     _type: ($) => TYPE($),
-
-    attrs: ($) => ATTRS($),
 
     slice_lit: ($) => SLICE($),
 
@@ -153,27 +142,37 @@ module.exports = grammar({
     list_lit: ($) =>
       seq(
         field("open", "("),
-        repeat1(field("value", $._form)),
+        repeat1(field("value", choice($._expr, $.element))),
+        optional(field("value", repeat1($.pipe))),
         field("close", ")"),
       ),
+
+    _attr_list_lit: ($) =>
+      seq(
+        field("open", "("),
+        field("value", alias("=", $.sym)),
+        repeat1(field("value", choice($._expr, $.element))),
+        optional(field("value", repeat1($.pipe))),
+        field("close", ")"),
+      ),
+
+    pipe: ($) => seq(field("marker", ";"), repeat1($._expr)),
 
     element: ($) =>
       seq(
         field("open", "["),
         field("tag", choice($.ident, $.kwd_lit)),
-        optional($.attrs),
+        optional(
+          alias(
+            prec.right(repeat1(alias($._attr_list_lit, $.list_lit))),
+            $.attrs,
+          ),
+        ),
         optional(alias($._elements, $.children)),
         field("close", "]"),
       ),
 
-    _elements: ($) => repeat1($._form),
-
-    attr: ($) =>
-      seq(
-        field("key", $.ident),
-        token.immediate("="),
-        field("value", alias(ATTR_VAL, $.text)),
-      ),
+    _elements: ($) => repeat1(choice($.element, $.list_lit, TEXT, ESCAPE_FORM)),
 
     def_record: ($) =>
       seq(
@@ -194,6 +193,6 @@ module.exports = grammar({
         field("close", "end"),
       ),
 
-    _templ_body: ($) => seq(BLOCK, repeat1($._form)),
+    _templ_body: ($) => seq(BLOCK, repeat1(choice($.element, $.list_lit))),
   },
 });

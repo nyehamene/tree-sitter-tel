@@ -161,3 +161,13 @@ templ m Model do
         (body
             (element tag: (ident))
             (element tag: (ident)))))
+
+===
+template-4
+:error
+===
+
+templ m Model do
+    text
+    end
+

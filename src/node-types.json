@@ -1,31 +1,5 @@
 [
   {
-    "type": "attr",
-    "named": true,
-    "fields": {
-      "key": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ident",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "text",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "attrs",
     "named": true,
     "fields": {},
@@ -34,7 +8,7 @@
       "required": true,
       "types": [
         {
-          "type": "attr",
+          "type": "list_lit",
           "named": true
         }
       ]
@@ -60,43 +34,11 @@
       "required": true,
       "types": [
         {
-          "type": "bool_lit",
-          "named": true
-        },
-        {
           "type": "element",
           "named": true
         },
         {
-          "type": "escape",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "ident",
-          "named": true
-        },
-        {
-          "type": "int_lit",
-          "named": true
-        },
-        {
-          "type": "kwd_lit",
-          "named": true
-        },
-        {
           "type": "list_lit",
-          "named": true
-        },
-        {
-          "type": "str_lit",
-          "named": true
-        },
-        {
-          "type": "sym",
           "named": true
         }
       ]
@@ -113,46 +55,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "bool_lit",
-          "named": true
-        },
         {
           "type": "element",
           "named": true
         },
         {
-          "type": "escape",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "ident",
-          "named": true
-        },
-        {
-          "type": "int_lit",
-          "named": true
-        },
-        {
-          "type": "kwd_lit",
-          "named": true
-        },
-        {
           "type": "list_lit",
-          "named": true
-        },
-        {
-          "type": "str_lit",
-          "named": true
-        },
-        {
-          "type": "sym",
           "named": true
         }
       ]
@@ -329,11 +239,6 @@
     }
   },
   {
-    "type": "escape",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "field",
     "named": true,
     "fields": {
@@ -467,10 +372,6 @@
             "named": true
           },
           {
-            "type": "escape",
-            "named": true
-          },
-          {
             "type": "field_access",
             "named": true
           },
@@ -488,6 +389,10 @@
           },
           {
             "type": "list_lit",
+            "named": true
+          },
+          {
+            "type": "pipe",
             "named": true
           },
           {
@@ -516,6 +421,60 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "pipe",
+    "named": true,
+    "fields": {
+      "marker": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "bool_lit",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "ident",
+          "named": true
+        },
+        {
+          "type": "int_lit",
+          "named": true
+        },
+        {
+          "type": "kwd_lit",
+          "named": true
+        },
+        {
+          "type": "list_lit",
+          "named": true
+        },
+        {
+          "type": "str_lit",
+          "named": true
+        },
+        {
+          "type": "sym",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -567,10 +526,6 @@
         },
         {
           "type": "element",
-          "named": true
-        },
-        {
-          "type": "escape",
           "named": true
         },
         {
@@ -732,19 +687,11 @@
     "named": false
   },
   {
-    "type": "=",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
   {
     "type": "[]",
-    "named": false
-  },
-  {
-    "type": "\\",
     "named": false
   },
   {
@@ -794,10 +741,6 @@
   {
     "type": "templ",
     "named": false
-  },
-  {
-    "type": "text",
-    "named": true
   },
   {
     "type": "true",

@@ -12,24 +12,29 @@ empty
 attr-1
 ===
 
-[div k1=value]
+[div (= k1 value)]
 
 ---
 
 (source
     (element
         tag: (ident)
-        (attrs (attr
-            key: (ident)
-            value: (text)))))
+        (attrs
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (ident)))))
 
 ===
 attr-2
 ===
 
 [div
-    k1=value
-    k2=value
+    (= k1 true)
+    (= k2 false)
+    (= k3 100)
+    (= k4 "string")
+    (= k5 (m.foo))
     ]
 
 ---
@@ -38,12 +43,77 @@ attr-2
     (element
         tag: (ident)
         (attrs
-            (attr
-                key: (ident)
-                value: (text))
-            (attr
-                key: (ident)
-                value: (text)))))
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (bool_lit))
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (bool_lit))
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (int_lit))
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (str_lit))
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (list_lit value:
+                    (field_access
+                        object: (ident)
+                        field: (ident)))))))
+
+===
+attr-3
+===
+
+[div
+    (= display grid
+        ; gap 10
+        ; auto-flow column
+        )
+    ]
+
+---
+
+(source
+    (element tag: (ident)
+        (attrs
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (ident)
+                value: (pipe (ident) (int_lit))
+                value: (pipe (ident) (ident))
+                ))))
+
+===
+attr-4
+===
+
+[div
+    (= display grid
+        ; gap 10
+        ; (auto-flow column)
+        )
+    ]
+
+---
+
+(source
+    (element tag: (ident)
+        (attrs
+            (list_lit
+                value: (sym)
+                value: (ident)
+                value: (ident)
+                value: (pipe (ident) (int_lit))
+                value: (pipe (list_lit value: (ident) value: (ident)))
+                ))))
 
 ===
 keyword
@@ -114,3 +184,15 @@ nesting-expr
     (element tag: (ident)
         (children
             (list_lit value: (ident)))))
+
+===
+plain-text-1
+===
+
+[div foo]
+
+---
+
+(source
+    (element tag: (ident)
+        (children)))

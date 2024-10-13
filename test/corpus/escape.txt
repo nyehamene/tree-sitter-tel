@@ -1,19 +1,32 @@
 ===
-bracket
+bracket-1
 ===
 
-\[
+[div \[]
 
 ---
 
-(source (escape))
+(source (element tag: (ident)
+    (children)))
+
+===
+bracket-2
+===
+
+[div \]]
+
+---
+
+(source (element tag: (ident)
+    (children)))
 
 ===
 parens
 ===
 
-\(
+[div \()]
 
 ---
 
-(source (escape))
+(source (element tag: (ident)
+    (children)))

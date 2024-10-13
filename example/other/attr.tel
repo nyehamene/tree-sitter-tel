@@ -1,0 +1,40 @@
+[div
+    (= id foo)
+    (= display grid
+        ; template-columns 1fr max-content
+        ; template-rows 200px 200px
+        ; gap 10px
+        )
+    (= position absolute
+        ; top 10px
+        ; left 10px
+        ; bottom 5px
+        ; right 5px
+        )
+    The quick brown fox jumped
+    [em over]
+    the lazy dog!
+    ]
+
+[div
+    (= id foo)
+    (= display grid
+        ; gap 10px
+        ; (template-columns 1fr max-content)
+        ; (template-rows 200px 200px)
+        )
+    (= position absolute
+        ; top 10px
+        ; left 10px
+        ; bottom 5px
+        ; right 5px
+        )
+    The quick brown fox jumped
+    [em over]
+    the lazy dog!
+    ]
+
+(foo bar baz
+    ; foo bar baz
+    ; (foo bar baz)
+    ; foo bar baz)
