@@ -62,6 +62,8 @@ module.exports = grammar({
 
   extras: ($) => [$.comment, /\s/],
 
+  externals: ($) => [$.str_lit],
+
   word: ($) => $.ident,
 
   rules: {
@@ -77,7 +79,7 @@ module.exports = grammar({
 
     int_lit: ($) => NUMBER,
 
-    str_lit: ($) => STRING,
+    // str_lit: ($) => STR($),
 
     bool_lit: ($) => BOOL,
 
