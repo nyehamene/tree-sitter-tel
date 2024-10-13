@@ -49,6 +49,13 @@
 
 (str_lit) @string
 
+(str_lit
+  (escape_char)  @string.escape)
+
+(str_lit
+  open: "\\(" @string.escape
+  close: ")" @string.escape)
+
 (bool_lit) @boolean
 
 (list_lit

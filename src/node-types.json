@@ -611,12 +611,89 @@
   {
     "type": "str_lit",
     "named": true,
-    "fields": {}
+    "fields": {
+      "close": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ")",
+            "named": false
+          }
+        ]
+      },
+      "open": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "\\(",
+            "named": false
+          }
+        ]
+      },
+      "templ": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "bool_lit",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "ident",
+            "named": true
+          },
+          {
+            "type": "int_lit",
+            "named": true
+          },
+          {
+            "type": "kwd_lit",
+            "named": true
+          },
+          {
+            "type": "list_lit",
+            "named": true
+          },
+          {
+            "type": "str_lit",
+            "named": true
+          },
+          {
+            "type": "sym",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_char",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "sym",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
   },
   {
     "type": "(",
@@ -671,6 +748,10 @@
     "named": false
   },
   {
+    "type": "\\(",
+    "named": false
+  },
+  {
     "type": "]",
     "named": false
   },
@@ -685,6 +766,10 @@
   {
     "type": "end",
     "named": false
+  },
+  {
+    "type": "escape_char",
+    "named": true
   },
   {
     "type": "false",

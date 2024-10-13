@@ -61,36 +61,39 @@ const FIELDS = ($) => repeat1($.field);
 const FIELD_ACCESS = ($) =>
   seq(field("object", $.ident), ".", field("field", $.ident));
 
-// /** @param {string} marker @param {any} $ */
-// const templ_with_marker = ($, marker) =>
-//   seq(marker, repeat(seq(optional(str_text(marker)), str_templ($))), marker);
+const escape_char = () => token(seq("\\", /[^\[\(\{]/));
 
-// /** @param {any} $ */
-// const str_templ = ($) => seq("\\", field("templ", $.list_lit));
+/**
+ * @param {string} marker
+ */
+const str_text = (marker) => token(regex("[^", marker, "\\\\]"));
 
-/** @param {string} marker */
-const str_with_marker = (marker) =>
-  seq(marker, repeat(str_text(marker)), marker);
+/**
+ * @param {any} $
+ * @param {string} marker
+ */
+const str_with_marker = ($, marker) =>
+  seq(
+    marker,
+    repeat(
+      choice(
+        $.escape_char,
+        str_text(marker),
+        seq(field("open", "\\("), field("templ", $._expr), field("close", ")")),
+      ),
+    ),
+    marker,
+  );
 
-/** @param {string} marker */
-const str_text = (marker) =>
-  seq(optional(regex("[^", marker, "\\\\]*")), optional(STR_ESCAPE));
-
-const STR_ESCAPE = seq("\\", /[^\(]/);
-
-const STR_PLAIN = token(choice(str_with_marker('"'), str_with_marker("'")));
-
-// /** @param {any} $ */
-// const STR_TEMPLATE = ($) =>
-//   choice(templ_with_marker($, '"'), templ_with_marker($, "'"));
-
-// /** @param {any} $ */
-const STR = () => choice(STR_PLAIN);
+/** @param {any} $ */
+const STR = ($) => choice(str_with_marker($, '"'), str_with_marker($, "'"));
 
 module.exports = grammar({
   name: "tel",
 
   extras: ($) => [$.comment, /\s/],
+
+  // externals: ($) => [$.escape_char, $._str_text],
 
   word: ($) => $.ident,
 
@@ -107,7 +110,9 @@ module.exports = grammar({
 
     int_lit: () => NUMBER,
 
-    str_lit: () => STR(),
+    str_lit: ($) => prec.left(STR($)),
+
+    escape_char: () => escape_char(),
 
     bool_lit: () => BOOL,
 

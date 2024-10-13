@@ -73,45 +73,108 @@ string-4
 (source (list_lit (str_lit)))
 
 ===
-string-5
+char-escape-1
 ===
 
 ("\a")
 
 ---
 
-(source (list_lit value: (str_lit)))
+(source
+    (list_lit value:
+        (str_lit (escape_char))))
 
 ===
-string-6
+char-escape-2
 :error
 ===
 
 ("\[")
 
 ===
-string-7
+char-escape-3
+:error
 ===
 
-("\bfoo")
+("\(")
+
+===
+char-escape-3-b
+
+Added to check that test annotated with :error works as intended.
+This test should fail because the source is valid.
+
+:error
+===
+
+("\b")
+
+===
+char-escape-4
+===
+
+("\ab")
 
 ---
 
 (source
     (list_lit value:
-        (str_lit)))
+        (str_lit
+            (escape_char))))
 
 ===
-string-8
+char-escape-5
 ===
 
-("foo\[")
+("a\b")
 
 ---
 
 (source
     (list_lit value:
-        (str_lit)))
+        (str_lit
+            (escape_char))))
+
+===
+char-escape-6
+===
+
+("a\bc")
+
+---
+
+(source
+    (list_lit value:
+        (str_lit
+            (escape_char))))
+
+===
+char-escape-7
+===
+
+("a\bc\d")
+
+---
+
+(source
+    (list_lit value:
+        (str_lit
+            (escape_char)
+            (escape_char))))
+
+===
+char-escape-8
+===
+
+("\a\b")
+
+---
+
+(source
+    (list_lit value:
+        (str_lit
+            (escape_char)
+            (escape_char))))
 
 ===
 bool-1
@@ -300,7 +363,6 @@ nested expr
 
 ===
 string-template-1
-:skip
 ===
 
 ("\(true)")
@@ -308,11 +370,12 @@ string-template-1
 ---
 
 (source
-    (list_lit value: (str_lit templ: (list_lit value: (bool_lit)))))
+    (list_lit value:
+        (str_lit templ:
+            (bool_lit))))
 
 ===
 string-template-2
-:skip
 ===
 
 ("foo\(100)")
@@ -320,7 +383,9 @@ string-template-2
 ---
 
 (source
-    (list_lit value: (str_lit templ: (list_lit value: (int_lit)))))
+    (list_lit value:
+        (str_lit templ:
+            (int_lit))))
 
 ===
 escape-1
